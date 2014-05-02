@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?> 
+
+    <openerp> 
+
+        <data>
+        
+        <record model="ir.ui.view" id="inherit_hr_view_form">
+	            <field name="name">inherit_hr.form</field>
+	            <field name="model">hr.employee</field>
+	            <field name="inherit_id" ref="hr.view_employee_form"/>	           
+	            <field name="arch" type="xml">              		
+            		 <xpath expr="//field[@name='work_email']" position="after">
+<!--             		 	<label for="first_name" class="oe_edit_only"/>                    -->
+                 		<field name="first_name" string="First Name"/>
+                 	 </xpath>		                                      
+	            </field>
+	        </record>
+	        
+	        
+	        <!-- <record model="ir.ui.view" id="inherit_hr_view_tree">
+	            <field name="name">inherit_hr.tree</field>
+	            <field name="model">hr.employee</field>
+	            <field name="type">tree</field>
+	            <field name="inherit_id" ref="hr.view_employee_tree"/>
+	            <field name="arch" type="xml">
+	                <tree string="" version="7.0"> 
+	                	<field name="first_name" string="First Name"/>              
+	                </tree>
+	            </field>
+	        </record> -->
+		      
+        </data>
+        
+    </openerp>
