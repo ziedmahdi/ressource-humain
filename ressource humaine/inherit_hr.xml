@@ -27,8 +27,8 @@
 		                         <group string="Contact Information">
 			                        <field name="work_phone"/>
 			                        <field name="personel_phone"/>	                        
-			                        <field name="work_email" widget="email"/>
-			                        <field name="personel_email" widget="email"/>	                        
+			                        <field name="work_email" widget="email" on_change="onchange_email(work_email)"/>
+			                        <field name="personel_email" widget="email" on_change="onchange_email(personel_email)"/>	                        
 		                         </group>
 		                         
 				                 <group string="Position &amp; Other Info">

@@ -3,12 +3,19 @@ from openerp import addons
 from openerp import netsvc, tools, pooler
 from openerp.osv import fields, osv
 from openerp.tools.translate import _
+import re
 
 class inherit_hr(osv.osv):
     
     _name ='hr.employee'
     
     _inherit = 'hr.employee'
+    
+    def onchange_email(self, cr, uid, ids, email):
+        if re.match("^.+\\@(\\[?)[a-zA-Z0-9\\-\\.]+\\.([a-zA-Z]{2,3}|[0-9]{1,3})(\\]?)$", email) != None:
+            return True
+        else:
+            raise osv.except_osv(_('Invalid Email'), _('Please enter a valid email address'))
     
     _columns = {
         'first_name':fields.char('First Name', size=64, required=True, readonly=False),
