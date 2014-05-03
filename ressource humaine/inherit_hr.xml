@@ -7,12 +7,73 @@
         <record model="ir.ui.view" id="inherit_hr_view_form">
 	            <field name="name">inherit_hr.form</field>
 	            <field name="model">hr.employee</field>
-	            <field name="inherit_id" ref="hr.view_employee_form"/>	           
-	            <field name="arch" type="xml">              		
-            		 <xpath expr="//field[@name='work_email']" position="after">
-<!--             		 	<label for="first_name" class="oe_edit_only"/>                    -->
-                 		<field name="first_name" string="First Name"/>
-                 	 </xpath>		                                      
+	            <field name="inherit_id" ref="hr_contract.hr_hr_employee_view_form2"/>  <!-- hr.view_employee_form -->	           
+	            <field name="arch" type="xml">
+	            
+		            <xpath expr="//div[@class='oe_title']" position="replace">
+			            <div class="oe_title">
+		                     <label for="name" class="oe_edit_only"/>                    
+		                     <field name="name"/>
+		                     <label for="first_name" class="oe_edit_only"/>                    
+	                 		 <field name="first_name" string="First Name"/>
+		                     
+		                 </div> 
+		             </xpath>             		
+            		                  	 
+                     
+                     <xpath expr="//page[@string='Public Information']" position="replace">
+	                     <page string="Public Information" groups="base.group_hr_user">
+		                     <group>
+		                         <group string="Contact Information">
+			                        <field name="work_phone"/>
+			                        <field name="personel_phone"/>	                        
+			                        <field name="work_email" widget="email"/>
+			                        <field name="personel_email" widget="email"/>	                        
+		                         </group>
+		                         
+				                 <group string="Position &amp; Other Info">
+		                            <field name="job"/>
+		                            <field name="country_id" options='{"no_open": True}'/>	                            
+		                            <field name="identification_id" groups="base.group_hr_user"/>
+		                            <field name="ssn"/> 			                         
+			                     </group>
+		                         
+		                     </group>
+		                 </page>
+	                 </xpath>
+                     
+                     
+                     
+                     <xpath expr="//page[@string='Personal Information']" position="replace">
+	                     <page string="Personal Information" groups="base.group_hr_user">
+		                     <group>
+		                         <group string="Address">
+		                            <field name="address"/>
+		                            <field name="zip"/>
+		                            <field name="city"/>
+		                            <field name="country"/> 
+		                         </group>
+		                         
+		                         <group string="Status &amp; Birth">
+		                             <field name="gender"/>
+		                             <field name="marital"/>
+		                             <field name="birthday"/>
+		                             <field name="children"/>
+		                         </group>
+		                         
+		                     </group>
+		                 </page>
+	                 </xpath>
+	                 
+	                 
+	                 <xpath expr="//page[@string='HR Settings']" position="replace">
+	                		<page string="Other Information" groups="base.group_hr_user">
+                                <group>
+                                    <field name="notes" placeholder="Other Information ..." colspan="4"/>
+                                </group>
+                            </page>
+                       </xpath>
+                 	                                       
 	            </field>
 	        </record>
 	        
