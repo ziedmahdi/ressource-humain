@@ -55,9 +55,8 @@
         </record>
 		
 		        <!--  menu item -->
-        <menuitem action="action_hr_cost_center" id="menu_hr_cost_center" name="Cost Center" parent="hr.menu_hr_main"  />
-        
->          
+        <menuitem action="action_hr_cost_center" id="menu_hr_cost_center" name="Cost Center" parent="hr.menu_hr_main"  /> 
+               
 		
 	</data>
 </openerp>

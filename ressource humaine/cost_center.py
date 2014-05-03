@@ -1,4 +1,4 @@
- #-*- coding: utf-8 -*-
+#-*- coding: utf-8 -*-
 from openerp import addons
 from openerp.osv import fields, osv
 from openerp.tools.translate import _
@@ -12,10 +12,10 @@ class cost_center(osv.osv):
                 'date_entry': fields.date('Date of Entry'), 
                 'date_release': fields.date('Realease Date'),
                 
-                #la fonction de l'employé je pense qu'il faut relier a HR.JOB
+                #la fonction de l'employï¿½ je pense qu'il faut relier a HR.JOB
                 'function':fields.char('Function', size=64, required=True),
                 
-                #Un employé peut travailler en même temps dans 1 à n centres de coûts.
+                #Un employï¿½ peut travailler en mï¿½me temps dans 1 ï¿½ n centres de coï¿½ts.
                 'employee_id': fields.many2one('hr.employee', "Employee", required=True),
                 'department_id': fields.related('employee_id','department_id', type='many2one', relation='hr.department', string="Department", readonly=True),
                 'number_of_hours_worked': fields.integer('Number of hours worked'),
@@ -24,17 +24,17 @@ class cost_center(osv.osv):
             
                     }
     
-    def _check_dates(self, cr, uid, ids, context=None):
-        for date in self.read(cr, uid, ids, ['date_entry', 'date_release'], context=context):
-             if date['date_release'] and date['date_entry'] and date['date_entry'] > contract['date_release']:
-                 return False
-        return True 
-
-      
-
-    _constraints = [
-        (_check_dates, 'Error! Cost Center, date entry must be less than contract date release.', ['date_entry', 'date_release'])
-    ]    
+#     def _check_dates(self, cr, uid, ids, context=None):
+#         for date in self.read(cr, uid, ids, ['date_entry', 'date_release'], context=context):
+#             if date['date_release'] and date['date_entry'] and date['date_entry'] > contract['date_release']:
+#                 return False
+#         return True 
+# 
+#       
+# 
+#     _constraints = [
+#         (_check_dates, 'Error! Cost Center, date entry must be less than contract date release.', ['date_entry', 'date_release'])
+#     ]    
 cost_center()
     
     

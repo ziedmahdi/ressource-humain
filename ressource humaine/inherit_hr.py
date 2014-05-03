@@ -11,11 +11,17 @@ class inherit_hr(osv.osv):
     
     _inherit = 'hr.employee'
     
-    def onchange_email(self, cr, uid, ids, email):
+    #function to make sure that the user has typed a correct email address  
+    def onchange_email(self, email):
         if re.match("^.+\\@(\\[?)[a-zA-Z0-9\\-\\.]+\\.([a-zA-Z]{2,3}|[0-9]{1,3})(\\]?)$", email) != None:
             return True
-        else:
+        else:                    
             raise osv.except_osv(_('Invalid Email'), _('Please enter a valid email address'))
+    
+#     def _check_email(self, cr,uid,ids,context=None):
+#         employee = self.browse(cr,uid,ids,context=context)
+#         self.onchange_email(self, employee.work_email,True)
+        
     
     _columns = {
         'first_name':fields.char('First Name', size=64, required=True, readonly=False),
@@ -28,5 +34,7 @@ class inherit_hr(osv.osv):
         'country': fields.char('Country', size=64),
         'job': fields.char('Job', size=64)
         }
+    
+#    _constraints = [(_check_email, 'Please avoid spam in ideas !', ['work_email'])]
     
 inherit_hr() 
