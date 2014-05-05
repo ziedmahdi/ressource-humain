@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?> 
+
+    <openerp> 
+        <data>
+        
+        				<!-- hr_contract form view-->
+        				
+        	<record model="ir.ui.view" id="inherit_hr_contract_view_form">
+	        	<field name="name">inherit_hr_contract.form</field>
+	            <field name="model">hr.contract</field>
+	            <field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>           
+	            <field name="arch" type="xml">
+	                
+	                <field name="job_id" position="replace"/>  <!-- supprime le champ Nom/Titre d'un employée , à revoir -->
+	                
+	            	<xpath expr="//page[@string='Work Permit']" position="replace">	 
+	            	           
+			            <page string="Durée">
+			            	<group string="Durée du contrat">
+			            		<field name="date_start"/>
+			            		<field name="date_end"/>
+			            	</group>	
+			            </page>
+			               
+		            </xpath>
+	            
+	            
+	            
+		            <xpath expr="//page[@string='Information']" position="replace">	
+		            	            
+			            <page string="Salaire">
+			            	<group col="4">
+			            		<group string="Salaire">
+			            			<field name="wage"/>
+			            			<field name="salary_type"/>
+			            			
+			            		</group>
+			            	
+			            		<group string="Temps de travail">
+			            			<field name="salary" invisible="True"/>
+			            			<field name="work_time_type"/>
+			            		</group>
+			            	</group>
+			            </page>
+			            
+		            </xpath>
+		             
+		             
+		             	
+		            <notebook>	    
+			            <page string="Autres">
+			            	<group string="Autres" col="4">
+			            		<field name="occupation_time"/>
+			            		<field name="taxed_at_source"/>
+			            	</group>
+			            </page>
+		            </notebook>
+                     
+	            </field>
+	         </record> 
+	     
+	     
+	     
+	    				<!-- hr_contract tree view -->  
+	    				   				
+	    	<record model="ir.ui.view" id="inherit_hr_contract_view_tree">
+	            <field name="name">inherit_hr_contract.tree</field>
+	            <field name="model">hr.contract</field>
+	            <field name="type">tree</field>
+	            <field name="inherit_id" ref="hr_contract.hr_contract_view_tree"/>           
+	            <field name="arch" type="xml">
+	            
+	            	<xpath expr="//tree[@string='Contracts']" position="replace">
+						<tree string="Contrats des employées">
+	            			<field name="date_start"/>
+	            			<field name="date_end"/>
+	            			<field name="work_time_type"/>
+	            			<field name="salary"/>
+	            			<field name="salary_type"/>
+	            			<field name="occupation_time"/>
+	            			<field name="taxed_at_source"/>
+	            		</tree>
+	            	</xpath>
+	            	
+	            </field>
+	      	</record> 
+	      	       
+        </data>  
+    </openerp>
