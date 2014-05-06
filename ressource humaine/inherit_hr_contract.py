@@ -17,7 +17,7 @@ class inherit_hr_contract(osv.osv):
                 'date_start': fields.date('Date début',required=True), 
                 'date_end': fields.date('Date fin',required=True),
                 'work_time_type':fields.char('Type de temps de travail',required=True), 
-                'occupation_time': fields.integer('Temps d\'occupation',required=True),
+                'occupation_time': fields.integer('Taux d\'occupation',required=True),
                 'taxed_at_source':fields.char('Imposé à la source', required=True)
                 }
     
