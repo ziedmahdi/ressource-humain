@@ -13,12 +13,17 @@ class inherit_hr_contract(osv.osv):
     
     _columns = {
                 'salary': fields.integer('Salaire',required=True),
-                'salary_type':fields.char('Type de salaire', required=True),
+                'salary_type_id':fields.many2one('salary.type', 'Type de salaire', required=True), 
                 'date_start': fields.date('Date début',required=True), 
                 'date_end': fields.date('Date fin',required=True),
-                'work_time_type':fields.char('Type de temps de travail',required=True), 
-                'occupation_time': fields.integer('Taux d\'occupation',required=True),
-                'taxed_at_source':fields.char('Imposé à la source', required=True)
+                
+                'work_time_type':fields.selection([
+                     ('complet','Complet'),
+                     ('partiel','Partiel'),
+                     ],'Type de temps de travail', select=True),
+                
+                'occupation_rate': fields.integer('Taux d\'occupation',required=True),
+                'taxed_at_source':fields.boolean('Imposé à la source', required=True), 
                 }
     
 

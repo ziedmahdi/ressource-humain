@@ -32,7 +32,7 @@
 			            	<group col="4">
 			            		<group string="Salaire">
 			            			<field name="wage"/>
-			            			<field name="salary_type"/>
+			            			<field name="salary_type_id"/>
 			            			
 			            		</group>
 			            	
@@ -50,7 +50,7 @@
 		            <notebook>	    
 			            <page string="Autres">
 			            	<group string="Autres" col="4">
-			            		<field name="occupation_time"/>
+			            		<field name="occupation_rate"/>
 			            		<field name="taxed_at_source"/>
 			            	</group>
 			            </page>
@@ -76,8 +76,8 @@
 	            			<field name="date_end"/>
 	            			<field name="work_time_type"/>
 	            			<field name="salary"/>
-	            			<field name="salary_type"/>
-	            			<field name="occupation_time"/>
+	            			<field name="salary_type_id"/>
+	            			<field name="occupation_rate"/>
 	            			<field name="taxed_at_source"/>
 	            		</tree>
 	            	</xpath>
