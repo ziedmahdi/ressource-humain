@@ -28,4 +28,4 @@ class inherit_hr_contract(osv.osv):
     
 
     
-inherit_hr_contract() 
+inherit_hr_contract()  

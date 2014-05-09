@@ -77,7 +77,7 @@
 	            			<field name="work_time_type"/>
 	            			<field name="salary"/>
 	            			<field name="salary_type_id"/>
-	            			<field name="occupation_rate"/>
+	            	 		<field name="occupation_rate"/>
 	            			<field name="taxed_at_source"/>
 	            		</tree>
 	            	</xpath>
