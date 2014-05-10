@@ -2,4 +2,5 @@
 import inherit_hr
 import cost_center
 import inherit_hr_contract
-import salary_type 
+import salary_type
+import function 
