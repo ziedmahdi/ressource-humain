@@ -7,7 +7,7 @@
         <record model="ir.ui.view" id="inherit_hr_view_form">
 	            <field name="name">inherit_hr.form</field>
 	            <field name="model">hr.employee</field>
-	            <field name="inherit_id" ref="hr_contract.hr_hr_employee_view_form2"/>  <!-- hr.view_employee_form -->	           
+	            <field name="inherit_id" ref="hr_contract.hr_hr_employee_view_form2"/>  	           
 	            <field name="arch" type="xml">
 	            
 		            <xpath expr="//div[@class='oe_title']" position="replace">
@@ -25,14 +25,14 @@
 	                     <page string="Public Information" groups="base.group_hr_user">
 		                     <group>
 		                         <group string="Contact Information">
-			                        <field name="work_phone"/>
-			                        <field name="personel_phone"/>	                        
+			                        <field name="work_phone" on_change="onchange_phone(work_phone)"/>
+			                        <field name="personal_phone" on_change="onchange_phone(personal_phone)"/>	                        
 			                        <field name="work_email" widget="email" on_change="onchange_email(work_email)"/>
-			                        <field name="personel_email" widget="email" on_change="onchange_email(personel_email)"/>	                        
+			                        <field name="personal_email" widget="email" on_change="onchange_email(personal_email)"/>	                        
 		                         </group>
 		                         
 				                 <group string="Position &amp; Other Info">
-		                            <field name="job"/>
+		                            <field name="job_id"/>
 		                            <field name="country_id" options='{"no_open": True}'/>	                            
 		                            <field name="identification_id" groups="base.group_hr_user"/>
 		                            <field name="ssn"/> 			                         
@@ -54,13 +54,17 @@
 		                            <field name="country"/> 
 		                         </group>
 		                         
-		                         <group string="Status &amp; Birth">
+		                         <group string="Status">
 		                             <field name="gender"/>
-		                             <field name="marital"/>
-		                             <field name="birthday"/>
+		                             <field name="title"/>
+		                             <field name="marital"/>		                            
 		                             <field name="children"/>
 		                         </group>
-		                         
+
+                                 <group string="Birth" colspan="2" col="4">
+                                     <field name="birthday"/>
+                                     <field name="place_of_birth"/>
+                                 </group>		                         
 		                     </group>
 		                 </page>
 	                 </xpath>
@@ -69,8 +73,14 @@
 	                 <xpath expr="//page[@string='HR Settings']" position="replace">
 	                		<page string="Other Information" groups="base.group_hr_user">
                                 <group>
-                                    <field name="notes" placeholder="Other Information ..." colspan="4"/>
+                                	<group string="Active" name="active_group">
+                                        <field name="active"/>
+                                    </group>
+                                    
+                                    	
+                                    
                                 </group>
+                                <field name="notes" placeholder="Other Information ..." colspan="4"/>
                             </page>
                        </xpath>
                  	                                       
@@ -78,17 +88,24 @@
 	        </record>
 	        
 	        
-	        <!-- <record model="ir.ui.view" id="inherit_hr_view_tree">
+	        <record model="ir.ui.view" id="inherit_hr_view_tree">
 	            <field name="name">inherit_hr.tree</field>
 	            <field name="model">hr.employee</field>
 	            <field name="type">tree</field>
-	            <field name="inherit_id" ref="hr.view_employee_tree"/>
-	            <field name="arch" type="xml">
-	                <tree string="" version="7.0"> 
-	                	<field name="first_name" string="First Name"/>              
-	                </tree>
+	            <field name="inherit_id" ref="hr.view_partner_tree2"/>           
+	            <field name="arch" type="xml">	            
+	            	<xpath expr="//tree[@string='Employees']" position="replace">
+						<tree string="Employees">	            				            			
+	            			<field name="name"/>
+	            			<field name="first_name"/>
+		                    <field name="work_phone"/>
+		                    <field name="work_email"/>		                    
+		                    <field name="job_id"/>
+	            		</tree>
+	            	</xpath>
+	            	
 	            </field>
-	        </record> -->
+	      	</record>
 		      
         </data>
         
