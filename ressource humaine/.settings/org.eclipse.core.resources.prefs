@@ -2,5 +2,6 @@ eclipse.preferences.version=1
 encoding/__init__.py=utf-8
 encoding/__openerp__.py=utf-8
 encoding/cost_center.py=utf-8
+encoding/function.py=utf-8
 encoding/inherit_hr.py=utf-8
 encoding/inherit_hr_contract.py=utf-8

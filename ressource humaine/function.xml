@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+		
+			<!--cost center form view -->
+         <record id="view_cost_center_function_form" model="ir.ui.view">
+            <field name="name">cost.center.function.form </field>
+            <field name="model">cost.center.function</field>
+            <field name="arch" type="xml">
+               <form string="Cost Center function " version="7.0">
+               	
+            	  <group colspan="2" col="4">
+
+ 	                    <field name="function"/>
+	                    <field name="statut" />
+            		
+            		
+            	  </group>
+            	</form>      	  	
+            </field>
+          </record> 
+          
+          
+          		        	   <!-- action cost center-->
+        	   
+        <record model="ir.actions.act_window" id="action_hr_cost_center_function">
+            <field name="name">function</field>
+            <field name="res_model">cost.center.function</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field> 
+        </record>
+        
+        		        <!--  menu item -->
+        <menuitem action="action_hr_cost_center_function" id="menu_hr_cost_center_function" name="Function" parent="hr.menu_hr_configuration"  />
+         </data>
+</openerp>

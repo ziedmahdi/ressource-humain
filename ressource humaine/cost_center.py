@@ -12,15 +12,12 @@ class cost_center(osv.osv):
                 'date_entry': fields.date('Date of Entry'), 
                 'date_release': fields.date('Realease Date'),
                 
-                #la fonction de l'employ� je pense qu'il faut relier a HR.JOB
-                'function':fields.char('Function', size=64, required=True),
-                
-                #Un employ� peut travailler en m�me temps dans 1 � n centres de co�ts.
-                'employee_id': fields.many2one('hr.employee', "Employee", required=True),
-                'department_id': fields.related('employee_id','department_id', type='many2one', relation='hr.department', string="Department", readonly=True),
+                #la fonction de l'employÃ© champs many2one
+                'function_id': fields.many2one('cost.center.function', "Function", required=True),
+                'department_id': fields.many2one('hr.department', "Department", required=True),
                 'number_of_hours_worked': fields.integer('Number of hours worked'),
-                'Departement_head':fields.char('Departement Head', size=64, required=True),
-
+                'supervisor':fields.char('Supervisor', size=64, required=True),
+                'Occupation_rate': fields.integer('Occupation Rate'),
             
                     }
     

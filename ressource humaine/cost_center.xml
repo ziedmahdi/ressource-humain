@@ -13,10 +13,11 @@
 
                		<field name="date_entry"/>
             		<field name="date_release"/>
-            		<field name="employee_id"/>	
-              		<field name="function"/>	
+            		<field name="function_id"/>	
+              		<field name="department_id"/>
+              		<field name="supervisor	"/>              		
                		<field name="number_of_hours_worked"/>
-            		<field name="Departement_head"/>
+            		<field name="Occupation_rate"/>
             		
             		
             	  </group>
@@ -32,12 +33,15 @@
 			<field name="model">cost.center</field>
 			<field name="arch" type="xml">
 				<tree string="Cost Center " version="7.0">
+
                		<field name="date_entry"/>
             		<field name="date_release"/>
-					<field name="function"/>
-					<field name="employee_id"/>
-					<field name="number_of_hours_worked"/>
-					<field name="Departement_head"/>
+            		<field name="function_id"/>	
+              		<field name="department_id"/>
+              		<field name="supervisor	"/>              		
+               		<field name="number_of_hours_worked"/>
+            		<field name="Occupation_rate"/>
+            		
 				</tree>
 				
 			</field>
