@@ -17,8 +17,8 @@
 	            	           
 			            <page string="Durée">
 			            	<group string="Durée du contrat">
-			            		<field name="date_start"/>
-			            		<field name="date_end"/>
+			            		<field name="date_start" on_change="onchange_dates(date_start,date_end)"/>
+			            		<field name="date_end" on_change="onchange_dates(date_start,date_end)"/>
 			            	</group>	
 			            </page>
 			               

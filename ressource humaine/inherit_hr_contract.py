@@ -12,6 +12,15 @@ class inherit_hr_contract(osv.osv):
     _inherit = 'hr.contract'
     
     #function to make sure that the user enter valid start and end dates
+    def onchange_dates(self, cr,uid,ids, date_start, date_end):
+        if not date_start or not date_end:
+            return False
+        else:
+            if date_start > date_end:
+                raise osv.except_osv(_(''), _(''))
+            else:
+                return True
+    
 #     def _check_dates(self, cr,uid,ids,context=None):
 #         contracts = self.browse(cr,uid,ids,context=context)
 #         for contract in contracts:
