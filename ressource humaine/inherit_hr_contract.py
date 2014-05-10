@@ -22,8 +22,8 @@ class inherit_hr_contract(osv.osv):
                      ('partiel','Partiel'),
                      ],'Type de temps de travail', select=True),
                 
-                'occupation_rate': fields.integer('Taux d\'occupation',required=True),
-                'taxed_at_source':fields.boolean('Imposé à la source', required=True), 
+                'occupation_rate': fields.integer('Occupation rate'),
+                'taxed_at_source':fields.boolean('Tax at source' ), 
                 }
     
 
