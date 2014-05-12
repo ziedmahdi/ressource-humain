@@ -5,6 +5,8 @@ from openerp.osv import fields, osv
 from openerp.tools.translate import _
 import re
 
+
+#test zied
 class inherit_hr(osv.osv):
     
     _name ='hr.employee'
