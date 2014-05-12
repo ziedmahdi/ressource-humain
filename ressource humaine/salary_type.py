@@ -29,5 +29,5 @@ class salary_type(osv.osv):
 
                     } 
     
- #test seifffff !                 
+                  
 salary_type()
