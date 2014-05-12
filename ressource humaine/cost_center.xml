@@ -7,21 +7,33 @@
             <field name="name">cost.center.form </field>
             <field name="model">cost.center</field>
             <field name="arch" type="xml">
-               <form string="Cost Center " version="7.0">
+             <form string="Cost Center " version="7.0">
                	
-            	  <group colspan="2" col="4">
+               <sheet>	
+               	<notebook>
+               		<page string="Cost Center Information">
 
-               		<field name="date_entry"/>
-            		<field name="date_release"/>
-            		<field name="function_id"/>	
-              		<field name="department_id"/>
-              		<field name="supervisor"/>              		
-               		<field name="number_of_hours_worked"/>
-            		<field name="occupation_rate"/>
-            		
-            		
-            	  </group>
-            	</form>      	  	
+          	    	 	<group colspan="2" col="4">
+               				<field name="date_entry"/>
+            				<field name="date_release"/>
+            				<field name="function_id"/>	
+              				<field name="department_id"/>
+              				<field name="supervisor"/>              		
+               				<field name="number_of_hours_worked"/>
+            				<field name="occupation_rate"/>
+             	 	 	</group>
+
+            	   </page>
+            	   <page string="Contract">
+            	   		<group>
+            	   			<field name="contract_ids"/>
+            	   	
+            	   		</group>
+            	   </page>
+            	  
+               </notebook>
+               </sheet> 
+              </form>      	  	
             </field>
            	 
 		</record>
