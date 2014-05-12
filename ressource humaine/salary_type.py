@@ -21,13 +21,13 @@ class salary_type(osv.osv):
                     ('annuelle','Annuelle')],'Planification de la paie', select=True),
                  
                  'sex':fields.selection([
-                     ('homme','Homme'),
+                     ('homme','Hoomme'), 
                      ('femme','Femme'),
                       ],'Sexe', select=True),
                 
                  'code':fields.char('Code', size=64, required=False)    
 
                     } 
-     
-                  
+                
+    
 salary_type()
