@@ -28,6 +28,5 @@ class salary_type(osv.osv):
                  'code':fields.char('Code', size=64, required=False)    
 
                     } 
-    
- #test seifffff !                 
+                 
 salary_type()
