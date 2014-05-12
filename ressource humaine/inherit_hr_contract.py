@@ -3,59 +3,27 @@ from openerp import addons
 from openerp import netsvc, tools, pooler
 from openerp.osv import fields, osv
 from openerp.tools.translate import _
-import datetime
+import time
 
 class inherit_hr_contract(osv.osv):
     
-    _name ='hr.contract'
+    _name ='hr.contract' 
     
-    _inherit = 'hr.contract'
+    _inherit = 'hr.contract'  
     
-    #function to make sure that the user enter valid start and end dates
-    def onchange_dates(self, cr,uid,ids, date_start, date_end):
-        if not date_start or not date_end:
-            return False
-        else:
-            if date_start > date_end:
-                raise osv.except_osv(_(''), _(''))
-            else:
-                return True
-    
-#     def _check_dates(self, cr,uid,ids,context=None):
-#         contracts = self.browse(cr,uid,ids,context=context)
-#         for contract in contracts:
-#             date_start = contract.date_start
-#             if not date_start:
-#                 return False            
-#             else:
-#                 date_start = datetime.strptime(date_start,"%d/%m/%Y")
-#             date_end = contract.date_end
-#             if not date_end:
-#                 return False
-#             else:
-#                 date_end = datetime.strptime(date_end,"%d/%m/%Y") 
-#             
-#             if date_end > date_start:
-#                 return True
-#             else:
-#                 return False
-#             
-    
-    _columns = {
-                'salary': fields.integer('Salaire',required=True),
-                'salary_type_id':fields.many2one('salary.type', 'Type de salaire', required=True), 
-                
+    _columns = { 
+                'salary': fields.float('Salary',required=True),
+                'salary_type_id':fields.many2one('salary.type', 'Salary type', required=True),                 
                 
                 'work_time_type':fields.selection([
-                     ('complet','Complet'),
-                     ('partiel','Partiel'),
-                     ],'Type de temps de travail', select=True),
+                     ('complete','Complete'),
+                     ('partial','Partial'),
+                     ],'Working time type', select=True),
                 
-                'occupation_rate': fields.integer('Occupation rate'),
-                'taxed_at_source':fields.boolean('Tax at source' ), 
+                'occupation_rate': fields.integer('Occupation rate',required=True),
+                'taxed_at_source':fields.boolean('Taxed at source', required=True),
+                'cost_center_ids':fields.many2many('cost.center', 'contract_cost_center_rel', 'hr_contract_id', 'cost_center_id', 'Cost centers'),  
                 }
-    
-    
     
 
     

@@ -13,12 +13,17 @@
 	                
 	                <field name="job_id" position="replace"/>  <!-- supprime le champ Nom/Titre d'un employée , à revoir -->
 	                
+	                
+	                <xpath expr="//field[@name='type_id']" position="after">	 
+	            		<field name="occupation_rate"/>                 
+		            </xpath>
+		            
 	            	<xpath expr="//page[@string='Work Permit']" position="replace">	 
 	            	           
-			            <page string="Durée">
-			            	<group string="Durée du contrat">
-			            		<field name="date_start" on_change="onchange_dates(date_start,date_end)"/>
-			            		<field name="date_end" on_change="onchange_dates(date_start,date_end)"/>
+			            <page string="Duration">
+			            	<group string="Contract duration">
+			            		<field name="date_start"/>
+			            		<field name="date_end"/>
 			            	</group>	
 			            </page>
 			               
@@ -28,17 +33,16 @@
 	            
 		            <xpath expr="//page[@string='Information']" position="replace">	
 		            	            
-			            <page string="Salaire">
+			            <page string="Salary">
 			            	<group col="4">
-			            		<group string="Salaire">
-			            			<field name="wage"/>
+			            		<group string="Salary">
+			            			<field name="salary"/>
 			            			<field name="salary_type_id"/>
-			            			
 			            		</group>
 			            	
-			            		<group string="Temps de travail">
-			            			<field name="salary" invisible="True"/>
+			            		<group string="Working time type">
 			            			<field name="work_time_type"/>
+			            			<field name="taxed_at_source"/>
 			            		</group>
 			            	</group>
 			            </page>
@@ -48,10 +52,11 @@
 		             
 		             	
 		            <notebook>	    
-			            <page string="Autres">
-			            	<group string="Autres" col="4">
-			            		<field name="occupation_rate"/>
-			            		<field name="taxed_at_source"/>
+			            <page string="Cost centers">
+			            	<group string="Cost centers" col="4">
+			            	
+			            		<field name="cost_center_ids" widget="many2many_list"/>
+			            		
 			            	</group>
 			            </page>
 		            </notebook>
@@ -71,11 +76,11 @@
 	            <field name="arch" type="xml">
 	            
 	            	<xpath expr="//tree[@string='Contracts']" position="replace">
-						<tree string="Contrats des employées">
+	  					<tree string="Contrats des employées">
 	            			<field name="date_start"/>
 	            			<field name="date_end"/>
 	            			<field name="work_time_type"/>
-	            			<field name="salary"/>
+	             	 		<field name="salary"/>
 	            			<field name="salary_type_id"/>
 	            	 		<field name="occupation_rate"/>
 	            			<field name="taxed_at_source"/>
