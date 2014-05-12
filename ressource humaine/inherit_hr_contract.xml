@@ -14,8 +14,9 @@
 	                <field name="job_id" position="replace"/>  <!-- supprime le champ Nom/Titre d'un employée , à revoir -->
 	                
 	                
-	                <xpath expr="//field[@name='type_id']" position="after">	 
-	            		<field name="occupation_rate"/>                 
+	                <xpath expr="//field[@name='type_id']" position="after">
+	                <field name="occupation_rate"/>	 
+<!-- 	            		<field name="occupation_rate" on_change="onchange_occupation_rate(occupation_rate)"/>                  -->
 		            </xpath>
 		            
 	            	<xpath expr="//page[@string='Work Permit']" position="replace">	 
@@ -36,7 +37,7 @@
 			            <page string="Salary">
 			            	<group col="4">
 			            		<group string="Salary">
-			            			<field name="salary"/>
+			            			<field name="salary" on_change="onchange_salary(salary)"/>
 			            			<field name="salary_type_id"/>
 			            		</group>
 			            	
