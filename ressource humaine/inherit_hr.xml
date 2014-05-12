@@ -100,8 +100,9 @@
 	            			<field name="first_name"/>
 		                    <field name="work_phone"/>
 		                    <field name="work_email"/>		                    
-		                    <field name="job_id"/>
+
 	            		</tree>
+	            		<field name="job_id"/> 
 	            	</xpath>
 	            	
 	            </field>

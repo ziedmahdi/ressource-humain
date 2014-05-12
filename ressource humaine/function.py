@@ -6,17 +6,17 @@ from openerp import tools
 
 
 class function(osv.osv):
-    _name="cost.center.function"
+    _name="function"
     _description=" fonction "
     _columns = {
                 'function':fields.char('Function', size=64, required=True),
-                'statut':fields.selection([
+                'state':fields.selection([
                     ('employee','Employee'),
                     ('senior manager','Senior Manager'),
                     ('manager',' Manager'),
                     ('apprentices','Apprentices'),
                     ('trainee','Trainee'),
-                     ],    'State', select=True, readonly=True),
+                     ],    'State' ),
             
                     }
     

@@ -3,16 +3,16 @@
 	<data>
 		
 			<!--cost center form view -->
-         <record id="view_cost_center_function_form" model="ir.ui.view">
-            <field name="name">cost.center.function.form </field>
-            <field name="model">cost.center.function</field>
+         <record id="view_function_form" model="ir.ui.view">
+            <field name="name">function.form </field>
+            <field name="model">function</field>
             <field name="arch" type="xml">
-               <form string="Cost Center function " version="7.0">
+               <form string="Function " version="7.0">
                	
             	  <group colspan="2" col="4">
 
  	                    <field name="function"/>
-	                    <field name="statut" />
+	                    <field name="state" />
             		
             		
             	  </group>
@@ -24,8 +24,8 @@
           		        	   <!-- action cost center-->
         	   
         <record model="ir.actions.act_window" id="action_hr_cost_center_function">
-            <field name="name">function</field>
-            <field name="res_model">cost.center.function</field>
+            <field name="name">function.action</field>
+            <field name="res_model">function</field>
             <field name="view_type">form</field>
             <field name="view_mode">form</field> 
         </record>

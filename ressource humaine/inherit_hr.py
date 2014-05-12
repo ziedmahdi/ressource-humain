@@ -5,8 +5,6 @@ from openerp.osv import fields, osv
 from openerp.tools.translate import _
 import re
 
-
-#test zied
 class inherit_hr(osv.osv):
     
     _name ='hr.employee'
@@ -22,7 +20,9 @@ class inherit_hr(osv.osv):
     
     def _check_work_email(self, cr,uid,ids,context=None):
         employees = self.browse(cr,uid,ids,context=context)
+        print ('employees'+str(employees))
         for employee in employees:
+            print ('employee'+str(employee))
             email = employee.work_email
             if not email:
                 return False

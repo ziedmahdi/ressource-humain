@@ -15,9 +15,9 @@
             		<field name="date_release"/>
             		<field name="function_id"/>	
               		<field name="department_id"/>
-              		<field name="supervisor	"/>              		
+              		<field name="supervisor"/>              		
                		<field name="number_of_hours_worked"/>
-            		<field name="Occupation_rate"/>
+            		<field name="occupation_rate"/>
             		
             		
             	  </group>
@@ -27,7 +27,7 @@
 		</record>
 		
 		<!--cost center tree view -->
-		
+		<!-- 
 		<record id="view_cost_center_tree" model="ir.ui.view">
 			<field name="name">cost.center.tree	</field>
 			<field name="model">cost.center</field>
@@ -46,7 +46,7 @@
 				
 			</field>
 			
-		</record>
+		</record> -->
 		
 		
 		        	   <!-- action cost center-->
