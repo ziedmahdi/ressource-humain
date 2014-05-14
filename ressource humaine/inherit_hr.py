@@ -5,6 +5,9 @@ from openerp.osv import fields, osv
 from openerp.tools.translate import _
 import re
 
+
+
+
 class inherit_hr(osv.osv):
     
     _name ='hr.employee'
@@ -74,7 +77,19 @@ class inherit_hr(osv.osv):
                 else:
                     return False
     
-    
+    #function to set the matricule field automatically 
+    def _get_matricule(self, cr, uid, context=None):            
+        sql_req ="""SELECT matricule AS matricule 
+             FROM hr_employee
+             ORDER BY matricule DESC
+             LIMIT 1"""
+        cr.execute(sql_req)
+        sql_res = cr.dictfetchone()
+        if not sql_res:
+            return 1        
+        sql_res = int(sql_res['matricule'])                 
+        return sql_res  + 1
+        
     
     
     _columns = {
@@ -82,11 +97,16 @@ class inherit_hr(osv.osv):
         'personal_phone': fields.char('Personal Phone', size=16, readonly=False),
         'personal_email': fields.char('Personal Email', size=240),
         'ssn': fields.char('Security Social Number', size=32),
+        'matricule':fields.char('Matricule', size=16, readonly=True ),
         'address': fields.char('Address', size=240),
         'zip': fields.char('Zip', size=32),
         'city': fields.char('City', size=64),
         'country': fields.char('Country', size=64),
         'title':fields.selection([('mr', 'Mr'),('ms', 'Ms'),('miss', 'Miss')], 'Title'),
+        }
+    
+    _defaults ={
+        'matricule' : _get_matricule
         }
     
     _constraints = [(_check_work_email, 'Invalid Work Email. Please enter a valid email address', ['work_email']),
