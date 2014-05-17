@@ -16,20 +16,20 @@
           	    	 	<group colspan="2" col="4">
                				<field name="date_entry"/>
             				<field name="date_release"/>
-            				<field name="function_id"/>	
-              				<field name="department_id"/>
+            				<field name="function_id" options='{"no_open": True}'/>	
+              				<field name="department_id" options='{"no_open": True}'/>
               				<field name="supervisor"/>              		
                				<field name="number_of_hours_worked"/>
             				<field name="occupation_rate"/>
              	 	 	</group>
 
             	   </page>
-            	   <page string="Contract">
-            	   		<group>
-            	   			<field name="contract_ids"/>
+<!--             	   <page string="Contract"> -->
+<!--             	   		<group> -->
+<!--             	   			<field name="contract_id"/> -->
             	   	
-            	   		</group>
-            	   </page>
+<!--             	   		</group> -->
+<!--             	   </page> -->
             	  
                </notebook>
                </sheet> 
@@ -67,11 +67,11 @@
             <field name="name">Cost Center</field>
             <field name="res_model">cost.center</field>
             <field name="view_type">form</field>
-            <field name="view_mode">tree,form</field> 
+            <field name="view_mode">form,tree</field> 
         </record>
 		
 		        <!--  menu item -->
-        <menuitem action="action_hr_cost_center" id="menu_hr_cost_center" name="Cost Center" parent="hr.menu_hr_main"  /> 
+<!--         <menuitem action="action_hr_cost_center" id="menu_hr_cost_center" name="Cost Center" parent="hr.menu_hr_main"  />  -->
                
 		
 	</data>

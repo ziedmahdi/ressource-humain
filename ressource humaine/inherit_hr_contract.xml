@@ -13,10 +13,16 @@
 	                
 	                <field name="job_id" position="replace"/>  <!-- supprime le champ Nom/Titre d'un employée , à revoir -->
 	                
+	                <xpath expr="//field[@name='employee_id']" position="replace">
+	                	<field name="employee_id" options='{"no_open": True}' on_change="onchange_employee_id(employee_id,occupation_rate)"/>
+	                </xpath>
+	                
+	                <xpath expr="//field[@name='type_id']" position="replace">
+	                	<field name="type_id" options='{"no_open": True}'/>	 
+		            </xpath>
 	                
 	                <xpath expr="//field[@name='type_id']" position="after">
-	                <field name="occupation_rate"/>	 
-<!-- 	            		<field name="occupation_rate" on_change="onchange_occupation_rate(occupation_rate)"/>                  -->
+	                	<field name="occupation_rate"/>	 
 		            </xpath>
 		            
 	            	<xpath expr="//page[@string='Work Permit']" position="replace">	 
@@ -38,7 +44,7 @@
 			            	<group col="4">
 			            		<group string="Salary">
 			            			<field name="salary" on_change="onchange_salary(salary)"/>
-			            			<field name="salary_type_id"/>
+			            			<field name="salary_type_id" options='{"no_open": True}'/>
 			            		</group>
 			            	
 			            		<group string="Working time type">
@@ -56,11 +62,27 @@
 			            <page string="Cost centers">
 			            	<group string="Cost centers" col="4">
 			            	
-			            		<field name="cost_center_ids" widget="many2many_list"/>
+			            		<field name="cost_center_ids" widget="many2many_list" on_change="onchange_cost_center(cost_center_ids)"/>
 			            		
 			            	</group>
 			            </page>
+			            
+			            <page string="Other Information" groups="base.group_hr_user">
+                               <group>
+                               	<group string="Active" name="active_group">
+                                       <field name="active"/>
+                                   </group>
+                                   
+                                   	
+                                   
+                               </group>
+                               <field name="notes" placeholder="Other Information ..." colspan="4"/>
+                           </page>
 		            </notebook>
+		            
+		            
+                		
+                       
                      
 	            </field>
 	         </record> 
@@ -78,13 +100,14 @@
 	            
 	            	<xpath expr="//tree[@string='Contracts']" position="replace">
 	  					<tree string="Contrats des employées">
+	  						<field name="name"/>
+	  						<field name="employee_id"/>
 	            			<field name="date_start"/>
 	            			<field name="date_end"/>
-	            			<field name="work_time_type"/>
-	             	 		<field name="salary"/>
-	            			<field name="salary_type_id"/>
+	            			<field name="type_id"/>
+	            			<field name="salary_type_id"/>	            			
 	            	 		<field name="occupation_rate"/>
-	            			<field name="taxed_at_source"/>
+	            			
 	            		</tree>
 	            	</xpath>
 	            	

@@ -1,8 +1,8 @@
 #-*- coding: utf-8 -*-
-from openerp import addons
+
 from openerp.osv import fields, osv
-from openerp.tools.translate import _
-from openerp import tools
+
+
 
 class cost_center(osv.osv):
     _name="cost.center"
@@ -44,7 +44,7 @@ class cost_center(osv.osv):
                 'number_of_hours_worked': fields.integer('Number of hours worked'),
                 'supervisor':fields.char('Supervisor', size=64, required=True),
                 'occupation_rate': fields.integer('Occupation Rate'),
-                'contract_ids':fields.many2many('hr.contract', 'contract_cost_center', 'cost_center_id', 'contract_id', 'Contracts'), 
+                'contract_id':fields.many2one('hr.contract', 'Contracts'), 
                    }
     
     

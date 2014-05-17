@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-from openerp import addons
-from openerp import netsvc, tools, pooler
 from openerp.osv import fields, osv
 from openerp.tools.translate import _
 import re
@@ -48,6 +46,8 @@ class inherit_hr(osv.osv):
                     return False
     #function to make sure that the user has typed a correct phone number
     def onchange_phone(self, cr,uid,ids, phone):
+        if not phone:
+                return False
         if re.match("^[+]?[0-9\-./_ ]{8,16}$", phone) != None: 
             return True
         else:
