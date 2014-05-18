@@ -17,7 +17,7 @@ class cost_center(osv.osv):
             if not occupation_rate:
                 return False
             else:
-                if occupation_rate > 0 and occupation_rate < 101:
+                if occupation_rate >= 0 and occupation_rate < 101:
 
                     return True
                 else:
@@ -35,21 +35,21 @@ class cost_center(osv.osv):
     
     _columns = {
               
-                'date_entry': fields.date('Date of Entry'), 
-                'date_release': fields.date('Realease Date'),
+                'date_entry': fields.date('Date of Entry',required=True), 
+                'date_release': fields.date('Realease Date',required=True),
                 
-                #la fonction de l'employÃ© champs many2one
+                #la fonction de l'employee champs many2one
                 'function_id': fields.many2one('function', "Function", required=True),
                 'department_id': fields.many2one('hr.department', "Department", required=True),
                 'number_of_hours_worked': fields.integer('Number of hours worked'),
-                'supervisor':fields.char('Supervisor', size=64, required=True),
+                'supervisor':fields.many2one('hr.employee','Supervisor', required=True),
                 'occupation_rate': fields.integer('Occupation Rate'),
                 'contract_id':fields.many2one('hr.contract', 'Contracts'), 
                    }
     
     
     _constraints = [(_check_dates, 'Error! Cost Center, date entry must be less than contract date release.', ['date_entry', 'date_release']),
-                    (_check_occupation_rate, 'Error! The occupation rate must be between 1 and 100', ['occupation_rate']),
+                    (_check_occupation_rate, 'Error! The cost center occupation rate must be between 0 and 100', ['occupation_rate']),
          ]    
     
     

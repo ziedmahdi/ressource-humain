@@ -12,6 +12,8 @@ class inherit_hr(osv.osv):
     
     _inherit = 'hr.employee'
     
+    _rec_name = 'name'
+    
     #function to make sure that the user has typed a correct email address  
     def onchange_email(self, cr,uid,ids, email):
         if re.match("^.+\\@(\\[?)[a-zA-Z0-9\\-\\.]+\\.([a-zA-Z]{2,3}|[0-9]{1,3})(\\]?)$", email) != None:

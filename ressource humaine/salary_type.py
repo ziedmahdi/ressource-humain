@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
-from openerp import addons
-from openerp import netsvc, tools, pooler
 from openerp.osv import fields, osv
-from openerp.tools.translate import _
+
 
 
 class salary_type(osv.osv):

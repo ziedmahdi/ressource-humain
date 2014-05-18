@@ -1,7 +1,10 @@
 # -*- coding: utf-8 -*-
 from openerp.osv import fields, osv
 from openerp.tools.translate import _
-import time
+import datetime 
+from datetime import date
+
+
 
 
 
@@ -21,24 +24,27 @@ class inherit_hr_contract(osv.osv):
     
     def _get_contract_occupation_rate(self, cr, uid, ids, field_name, args, context=None):
         result = {}        
-        for i in ids:            
-            sql_req =""" SELECT occupation_rate AS occupation_rate
-                         FROM cost_center
-                         WHERE contract_id=%d                                                  
-                         """ % (i,)
-#                      AND cost_center.active = TRUE
-            cr.execute(sql_req)
-            sql_res = cr.dictfetchall()
-            result[i]=0
-            if sql_res:                
-                for lign in sql_res:
-                    result[i] += lign['occupation_rate']                 
+        occupation_rate =0
+        current_date = date.today()        
+        contract = self.browse(cr,uid,ids[0],context=context)
+        cost_center = contract.cost_center_ids
+        for cost_center_details in cost_center:                                   
+            date_start =datetime.datetime.strptime(cost_center_details.date_entry, "%Y-%m-%d").date()
+            date_end =datetime.datetime.strptime(cost_center_details.date_release, "%Y-%m-%d").date()
+            if date_end >= current_date and current_date >= date_start:            
+                occupation_rate +=   cost_center_details.occupation_rate        
+        result[ids[0]] =  occupation_rate                                                                                        
         return result 
-     
+
+# à changer
     def onchange_cost_center(self,cr,uid,ids,cost_center):                    
         occupation_rate = 0
-        for cost_center_details in cost_center:                        
-            occupation_rate += cost_center_details[2]['occupation_rate']
+        current_date = date.today()
+        for cost_center_details in cost_center:                                
+            date_start =datetime.datetime.strptime(cost_center_details[2]['date_entry'], "%Y-%m-%d").date()
+            date_end =datetime.datetime.strptime(cost_center_details[2]['date_release'], "%Y-%m-%d").date()
+            if date_end >= current_date and current_date >= date_start:                       
+                occupation_rate += cost_center_details[2]['occupation_rate']
                         
         res={
                 'value':{
@@ -55,28 +61,32 @@ class inherit_hr_contract(osv.osv):
                 
         return res
     
-    def _check_occupation_rate(self, cr,uid,ids,context=None):
-#        if self._get_contract_occupation_rate(self, cr, uid, ids, 'occupation_rate', None, context=context) > 100:
-        state = True
+    def _check_occupation_rate(self, cr,uid,ids,context=None):        
+        occupation_rate=0
         contracts = self.browse(cr,uid,ids,context=context)
+        current_date = date.today()
         for contract in contracts:
-            occupation_rate = contract.occupation_rate            
-            if occupation_rate > 100:
-                state = False
-        return state
+            cost_center = contract.cost_center_ids
+            for cost_center_details in cost_center:                                   
+                date_start =datetime.datetime.strptime(cost_center_details.date_entry, "%Y-%m-%d").date()
+                date_end =datetime.datetime.strptime(cost_center_details.date_release, "%Y-%m-%d").date()
+                if date_end >= current_date and current_date >= date_start:            
+                    occupation_rate +=   cost_center_details.occupation_rate  
+        if occupation_rate > 100:            
+            return False
+        return True
     
     def onchange_employee_id(self,cr,uid,ids,employee_id,occupation_rate,boolean=False):                                                
         sql_req="""SELECT occupation_rate
                    FROM hr_contract
-                   WHERE employee_id = %d
-                   AND id <>  %d
-                   """ %(employee_id,ids[0],)
+                   WHERE employee_id = %d                   
+                   """ %(employee_id,)
+        if ids:
+            sql_req += """AND id <>  %d"""%(ids[0],)
         cr.execute(sql_req)
         sql_res = cr.dictfetchall()
         if not sql_res:
-            return True
-        if sql_res[0]['occupation_rate'] is None:
-            return True
+            return True #even if the contract occupation rate is greater than 100%         
         employee_occupation_rate=occupation_rate
         for lign in sql_res:
             if lign['occupation_rate'] is None:
@@ -107,7 +117,7 @@ class inherit_hr_contract(osv.osv):
             else:
                 return False
             
-    
+#a changer    
     def _get_contract_status(self, cr, uid, ids, field_name, args, context=None):
         result = {}        
         for i in ids:            
@@ -127,33 +137,40 @@ class inherit_hr_contract(osv.osv):
                         continue 
                                      
         return result
-                
-        
-        
-        
     
-#     def _get_cost_center(self, cr, uid, ids, field_name, arg, context):
-#         result = {}
-#         for i in ids:
-#             contract = self.browse(cr,uid,i,context=context)
-#             occupation_rate = int(contract.occupation_rate)
-#             sql_req =""" SELECT id AS id
-#                          FROM cost_center
-#                          WHERE (%d + cost_center.occupation_rate <= 100)
-#                          
-#                          
-#                          """ % (occupation_rate,)
-# #                      AND cost_center.active = TRUE
-#             cr.execute(sql_req)
-#             sql_res = cr.dictfetchall()
-#             result[i]=[]
-#             if sql_res:                
-#                 for lign in sql_res:
-#                     result[i].append(lign['id'])                 
-#         return result         
-#         
-#     def _save_cost_center(self, cr, uid, ids, field_name, field_value, arg, context):
-#         self.pool.get('cost.center').write(cr, uid, field_name,{'cost_center_ids': field_value}, context=context)
+    def _get_date_end(self, cr, uid, ids, field_name, args, context=None):
+        result = {}
+        current_date = date.today()
+        contract = self.browse(cr,uid,ids[0],context=context)
+        date_max= current_date             
+        cost_center = contract.cost_center_ids
+        for cost_center_details in cost_center:
+            date_entry=cost_center_details.date_entry
+            date_release=cost_center_details.date_release                                    
+            date_start =datetime.datetime.strptime(date_entry, "%Y-%m-%d").date()
+            date_end =datetime.datetime.strptime(date_release, "%Y-%m-%d").date()
+            if date_end >= current_date and current_date >= date_start: 
+                if date_max < date_end:
+                    date_max = date_end
+        result[ids[0]] = date_max                                  
+        return result
+    
+    def _get_date_start(self, cr, uid, ids, field_name, args, context=None):
+        result = {}
+        for i in ids:
+            contract = self.browse(cr,uid,i,context=context)
+            date_min= current_date = date.today()            
+            cost_center = contract.cost_center_ids
+            for cost_center_details in cost_center:
+                date_entry=cost_center_details.date_entry
+                date_release=cost_center_details.date_release                                    
+                date_start =datetime.datetime.strptime(date_entry, "%Y-%m-%d").date()
+                date_end =datetime.datetime.strptime(date_release, "%Y-%m-%d").date()
+                if date_end >= current_date and current_date >= date_start: 
+                    if date_min > date_start:
+                        date_min = date_start
+            result[i] = date_min                                  
+        return result
     
     _columns = { 
                 'salary': fields.float('Salary',required=True),
@@ -166,15 +183,10 @@ class inherit_hr_contract(osv.osv):
                 'active': fields.boolean('Active'),
                 'occupation_rate': fields.function(_get_contract_occupation_rate, string='Occupation rate', type='integer', help='Occupation rate calculated based on the cost center related to this contract',readonly=True,store=True),
                 'taxed_at_source':fields.boolean('Taxed at source', required=False),
-                'cost_center_ids': fields.one2many('cost.center', 'contract_id', 'Cost centers'),
-
-                #'cost_center_ids':fields.many2many('cost.center','contract_cost_center_rel',  'hr_contract_id','cost_center_id',  'Cost centers'),
-                #'contract_cost_center_rel', 'hr_contract_id', 'cost_center_id',
-                #'filter_cost_center',fnct_inv=_save_cost_center
-                #'cost_center_ids':fields.function(_get_cost_center,type='many2many',store=True,obj="cost.center",method=True,string='Cost centers'),                
-    
-                #juste pour eviter le problème de contraint not null sur wage 
-                #'wage': fields.float('Wage', digits=(16,2), required=True, help="Basic Salary of the employee"),  
+                'cost_center_ids': fields.one2many('cost.center', 'contract_id', 'Cost centers'),                
+                'date_end':fields.function(_get_date_end, string='End Date', type='date', help='Date end is calculated based on the cost center related to this contract',store=True),
+                'date_start':fields.function(_get_date_start,required=True, string='Start Date', type='date', help='Date start is calculated based on the cost center related to this contract',store=True),
+                  
     }            
     
     _defaults = {
