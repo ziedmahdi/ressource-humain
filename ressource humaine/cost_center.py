@@ -42,7 +42,7 @@ class cost_center(osv.osv):
                 'function_id': fields.many2one('function', "Function", required=True,ondelete="cascade"),
                 'department_id': fields.many2one('hr.department', "Department", required=True,ondelete="cascade"),
                 'number_of_hours_worked': fields.integer('Number of hours worked'),
-                'supervisor':fields.many2one('hr.employee','Supervisor', required=True,ondelete="cascade"),
+                'supervisor':fields.many2one('hr.employee','Supervisor', required=True,ondelete="cascade",domain="['|', ('active', '=',True), ('active', '=',False)]"),
                 'occupation_rate': fields.integer('Occupation Rate'),
                 'contract_id':fields.many2one('hr.contract', 'Contracts'), 
                    }

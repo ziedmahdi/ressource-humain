@@ -3,6 +3,7 @@ from openerp.osv import fields, osv
 from openerp.tools.translate import _
 import datetime 
 from datetime import date
+from openerp.addons.pcd.cost_center import cost_center
 
 
 
@@ -35,15 +36,19 @@ class inherit_hr_contract(osv.osv):
                 if date_end >= current_date and current_date >= date_start:            
                     occupation_rate +=   cost_center_details.occupation_rate        
             result[i] =  occupation_rate                                                                                        
-        return result 
-
+        return result
+            
     # function to update the occupation rate and verify its integrity 
     def onchange_cost_center(self,cr,uid,ids,cost_center_change):                    
         occupation_rate = 0
         i=0        
         current_date = date.today()
-        contract = self.browse(cr,uid,ids[0],None)#we are sure that it's only one contract
-        cost_center = contract.cost_center_ids
+        if not ids:
+            cost_center = cost_center_change
+        else:
+            contract = self.browse(cr,uid,ids[0],None)#we are sure that it's only one contract
+            cost_center = contract.cost_center_ids
+            
         for cost_center_details in cost_center:            
             if cost_center_change[i][2] is False:
                 cost_center_date_entry = cost_center_details.date_entry
@@ -61,7 +66,7 @@ class inherit_hr_contract(osv.osv):
                     cost_center_date_entry = cost_center_details.date_entry
                 
                 if 'date_release' in cost_center_change[i][2].keys():
-                    cost_center_date_release = cost_center_change[i][2]['date_entry']
+                    cost_center_date_release = cost_center_change[i][2]['date_release']
                 else:
                     cost_center_date_release = cost_center_details.date_release
             i+=1                
@@ -109,7 +114,7 @@ class inherit_hr_contract(osv.osv):
             sql_req += """AND id <>  %d"""%(ids[0],)
         cr.execute(sql_req)
         sql_res = cr.dictfetchall()
-        if sql_res is []:
+        if not sql_res:
             return True #even if the contract occupation rate is greater than 100%         
         employee_occupation_rate=occupation_rate
         for lign in sql_res:
@@ -140,6 +145,43 @@ class inherit_hr_contract(osv.osv):
                 return True
             else:
                 return False
+    
+    
+    
+    def _get_associated_employee_status(self,cr,employee_id):
+        sql_req="""SELECT active
+                    FROM hr_employee
+                    WHERE id = %d
+                    LIMIT 1
+                """ %(employee_id,)
+        cr.execute(sql_req)
+        sql_res = cr.dictfetchone()
+        return sql_res['active']
+    
+    def _set_associated_employee_status(self,cr,employee_id,status):
+        sql_req="""UPDATE hr_employee
+                    SET active = %r
+                    WHERE id= %d""" %(status,employee_id,)
+        cr.execute(sql_req)
+    
+    def _get_if_employee_has_another_active_contract(self,cr,employee_id,contract_id):
+        sql_req="""SELECT count(*) as count_contract
+                    FROM hr_contract
+                    WHERE active = TRUE
+                    AND employee_id = %d
+                    AND id <> %d
+                    """ %(employee_id,contract_id,)
+        cr.execute(sql_req)
+        sql_res = cr.dictfetchone()
+        if sql_res['count_contract'] > 0:
+            return True
+        else:
+            return False
+        
+        
+        
+        
+            
             
     #function to tell if a contract is active or not  
     def _get_contract_status(self, cr, uid, ids, field_name, args, context=None):
@@ -147,10 +189,16 @@ class inherit_hr_contract(osv.osv):
         current_date = date.today()
         for i in ids:            
             contract = self.browse(cr,uid,i,context=context)
-            date_min= date_max = current_date            
+            date_min= date_max = current_date
+            contract_id = int (contract.id)
+            employee_id = contract.employee_id            
             cost_center = contract.cost_center_ids
             if not cost_center:
                 result[i]=False
+                if not self._get_if_employee_has_another_active_contract(cr,employee_id,contract_id):
+                    self._set_associated_employee_status(cr,employee_id,False)
+                else:
+                    self._set_associated_employee_status(cr,employee_id,True)
                 continue
             for cost_center_details in cost_center:
                 date_entry=cost_center_details.date_entry
@@ -164,9 +212,15 @@ class inherit_hr_contract(osv.osv):
                         date_max = date_end
             if date_max >= current_date and current_date >= date_min:
                 result[i]=True
+                #activate the associated employee (if is not already)
+                if not self._get_associated_employee_status(cr,employee_id):
+                    self._set_associated_employee_status(cr,employee_id,True)                                 
             else:
                 result[i]=False
-                                           
+                if not self._get_if_employee_has_another_active_contract(cr,employee_id,contract_id):
+                    self._set_associated_employee_status(cr,employee_id,False)
+                else:
+                    self._set_associated_employee_status(cr,employee_id,True)                                                           
         return result
     
     def _get_date_end(self, cr, uid, ids, field_name, args, context=None):
@@ -223,7 +277,7 @@ class inherit_hr_contract(osv.osv):
     _columns = { 
                 'salary': fields.float('Salary',required=True),
                 'salary_type_id':fields.many2one('salary.type', 'Salary type', required=True,ondelete="cascade"),                 
-                'employee_id': fields.many2one('hr.employee', "Employee", required=True,ondelete="cascade"),
+                'employee_id': fields.many2one('hr.employee', "Employee", required=True,ondelete="cascade",domain="['|', ('active', '=',True), ('active', '=',False)]"),
                 'work_time_type':fields.selection([
                      ('complete','Complete'),
                      ('partial','Partial'),
