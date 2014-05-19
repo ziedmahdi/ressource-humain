@@ -22,10 +22,8 @@ class inherit_hr(osv.osv):
             raise osv.except_osv(_('Invalid Email'), _('Please enter a valid email address'))
     
     def _check_work_email(self, cr,uid,ids,context=None):
-        employees = self.browse(cr,uid,ids,context=context)
-        print ('employees'+str(employees))
-        for employee in employees:
-            print ('employee'+str(employee))
+        employees = self.browse(cr,uid,ids,context=context)        
+        for employee in employees:        
             email = employee.work_email
             if not email:
                 return False
@@ -81,7 +79,7 @@ class inherit_hr(osv.osv):
     
     #function to set the matricule field automatically 
     def _get_matricule(self, cr, uid, context=None):            
-        sql_req ="""SELECT matricule AS matricule 
+        sql_req ="""SELECT matricule  
              FROM hr_employee
              ORDER BY matricule DESC
              LIMIT 1"""
@@ -91,13 +89,44 @@ class inherit_hr(osv.osv):
             return 1        
         sql_res = int(sql_res['matricule'])                 
         return sql_res  + 1
-        
+    
+    def _get_employee_status(self, cr, uid, ids, field_name, args, context=None):
+        result = {}
+        for i in ids:            
+            sql_req ="""SELECT count(*) as count_active_contracts  
+                 FROM hr_contract
+                 WHERE employee_id=%d
+                 AND active = TRUE
+                 """ % (i,)
+            cr.execute(sql_req)
+            sql_res = cr.dictfetchone()        
+            if sql_res['count_active_contracts'] > 0:
+                result[i]=True
+            else:
+                result[i]=False
+        return result
+#     def _get_employee_status(self, cr, uid, ids, field_name, args, context=None):
+#         result = {}
+#         for i in ids:
+#             contract = self.browse(cr,uid,i,context=context)
+#             date_min= current_date = date.today()            
+#             cost_center = contract.cost_center_ids
+#             for cost_center_details in cost_center:
+#                 date_entry=cost_center_details.date_entry
+#                 date_release=cost_center_details.date_release                                    
+#                 date_start =datetime.datetime.strptime(date_entry, "%Y-%m-%d").date()
+#                 date_end =datetime.datetime.strptime(date_release, "%Y-%m-%d").date()
+#                 if date_end >= current_date and current_date >= date_start: 
+#                     if date_min > date_start:
+#                         date_min = date_start
+#             result[i] = date_min                                  
+#         return result  
     
     
     _columns = {
         'first_name':fields.char('First Name', size=64, required=True, readonly=False),
         'personal_phone': fields.char('Personal Phone', size=16, readonly=False),
-        'personal_email': fields.char('Personal Email', size=240),
+        'personal_email': fields.char('Personal Email', size=64),
         'ssn': fields.char('Security Social Number', size=32),
         'matricule':fields.char('Matricule', size=16, readonly=True ),
         'address': fields.char('Address', size=240),
@@ -105,6 +134,7 @@ class inherit_hr(osv.osv):
         'city': fields.char('City', size=64),
         'country': fields.char('Country', size=64),
         'title':fields.selection([('mr', 'Mr'),('ms', 'Ms'),('miss', 'Miss')], 'Title'),
+        'active':fields.function(_get_employee_status, string='Active', type='boolean', help='Employee status is calculated automatically',store=True),
         }
     
     _defaults ={

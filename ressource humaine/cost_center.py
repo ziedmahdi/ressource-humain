@@ -39,10 +39,10 @@ class cost_center(osv.osv):
                 'date_release': fields.date('Realease Date',required=True),
                 
                 #la fonction de l'employee champs many2one
-                'function_id': fields.many2one('function', "Function", required=True),
-                'department_id': fields.many2one('hr.department', "Department", required=True),
+                'function_id': fields.many2one('function', "Function", required=True,ondelete="cascade"),
+                'department_id': fields.many2one('hr.department', "Department", required=True,ondelete="cascade"),
                 'number_of_hours_worked': fields.integer('Number of hours worked'),
-                'supervisor':fields.many2one('hr.employee','Supervisor', required=True),
+                'supervisor':fields.many2one('hr.employee','Supervisor', required=True,ondelete="cascade"),
                 'occupation_rate': fields.integer('Occupation Rate'),
                 'contract_id':fields.many2one('hr.contract', 'Contracts'), 
                    }
