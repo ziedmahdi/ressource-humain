@@ -187,14 +187,13 @@ class inherit_hr_contract(osv.osv):
     def _get_contract_status(self, cr, uid, ids, field_name, args, context=None):
         result = {}        
         current_date = date.today()
-        for i in ids:            
-            contract = self.browse(cr,uid,i,context=context)
-            date_min= date_max = current_date
+        for i in ids:
+            result[i]=False            
+            contract = self.browse(cr,uid,i,context=context)            
             contract_id = int (contract.id)
             employee_id = contract.employee_id            
             cost_center = contract.cost_center_ids
-            if not cost_center:
-                result[i]=False
+            if not cost_center:                
                 if not self._get_if_employee_has_another_active_contract(cr,employee_id,contract_id):
                     self._set_associated_employee_status(cr,employee_id,False)
                 else:
@@ -205,18 +204,13 @@ class inherit_hr_contract(osv.osv):
                 date_release=cost_center_details.date_release                                    
                 date_start =datetime.datetime.strptime(date_entry, "%Y-%m-%d").date()
                 date_end =datetime.datetime.strptime(date_release, "%Y-%m-%d").date()
-                if date_end >= current_date and current_date >= date_start: 
-                    if date_min > date_start:
-                        date_min = date_start
-                    if date_max < date_end:
-                        date_max = date_end
-            if date_max >= current_date and current_date >= date_min:
-                result[i]=True
-                #activate the associated employee (if is not already)
-                if not self._get_associated_employee_status(cr,employee_id):
-                    self._set_associated_employee_status(cr,employee_id,True)                                 
-            else:
-                result[i]=False
+                if date_end >= current_date and current_date >= date_start:                     
+                    result[i]=True                    
+                    #activate the associated employee (if is not already)
+                    if not self._get_associated_employee_status(cr,employee_id):
+                        self._set_associated_employee_status(cr,employee_id,True)
+                    break                                 
+            if result[i]==False:
                 if not self._get_if_employee_has_another_active_contract(cr,employee_id,contract_id):
                     self._set_associated_employee_status(cr,employee_id,False)
                 else:
@@ -225,36 +219,39 @@ class inherit_hr_contract(osv.osv):
     
     def _get_date_end(self, cr, uid, ids, field_name, args, context=None):
         result = {}
-        current_date = date.today()
         for i in ids:
-            contract = self.browse(cr,uid,i,context=context)
-            date_max= current_date             
+            date_max = False
+            contract = self.browse(cr,uid,i,context=context)                         
             cost_center = contract.cost_center_ids
-            for cost_center_details in cost_center:
-                date_entry=cost_center_details.date_entry
-                date_release=cost_center_details.date_release                                    
-                date_start =datetime.datetime.strptime(date_entry, "%Y-%m-%d").date()
+            if not cost_center:
+                result[i] = date.today()
+                continue
+            for cost_center_details in cost_center:               
+                date_release=cost_center_details.date_release                                                   
                 date_end =datetime.datetime.strptime(date_release, "%Y-%m-%d").date()
-                if date_end >= current_date and current_date >= date_start: 
-                    if date_max < date_end:
-                        date_max = date_end
+                if date_max is False:
+                    date_max = date_end                 
+                if date_max < date_end:
+                    date_max = date_end
             result[i] = date_max                                  
         return result
     
     def _get_date_start(self, cr, uid, ids, field_name, args, context=None):
         result = {}
         for i in ids:
-            contract = self.browse(cr,uid,i,context=context)
-            date_min= current_date = date.today()            
+            date_min = False
+            contract = self.browse(cr,uid,i,context=context)                        
             cost_center = contract.cost_center_ids
+            if not cost_center:
+                result[i] = date.today()
+                continue
             for cost_center_details in cost_center:
-                date_entry=cost_center_details.date_entry
-                date_release=cost_center_details.date_release                                    
+                date_entry=cost_center_details.date_entry                                                
                 date_start =datetime.datetime.strptime(date_entry, "%Y-%m-%d").date()
-                date_end =datetime.datetime.strptime(date_release, "%Y-%m-%d").date()
-                if date_end >= current_date and current_date >= date_start: 
-                    if date_min > date_start:
-                        date_min = date_start
+                if date_min is False:
+                    date_min = date_start                
+                if date_min > date_start:
+                    date_min = date_start
             result[i] = date_min                                  
         return result
     
