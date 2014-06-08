@@ -105,6 +105,7 @@ class inherit_hr(osv.osv):
             else:
                 result[i]=False
         return result
+    
 #     def _get_employee_status(self, cr, uid, ids, field_name, args, context=None):
 #         result = {}
 #         for i in ids:
@@ -138,7 +139,8 @@ class inherit_hr(osv.osv):
         }
     
     _defaults ={
-        'matricule' : _get_matricule
+        'matricule' : _get_matricule,
+        'active': False,
         }
     
     _constraints = [(_check_work_email, 'Invalid Work Email. Please enter a valid email address', ['work_email']),
