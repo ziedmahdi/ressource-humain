@@ -86,7 +86,9 @@ class inherit_hr(osv.osv):
         cr.execute(sql_req)
         sql_res = cr.dictfetchone()
         if not sql_res:
-            return 1        
+            return 1
+        elif not sql_res['matricule']:
+            return 2        
         sql_res = int(sql_res['matricule'])                 
         return sql_res  + 1
     
