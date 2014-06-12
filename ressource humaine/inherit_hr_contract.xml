@@ -9,12 +9,13 @@
 	            <field name="model">hr.contract</field>
 	            <field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>           
 	            <field name="arch" type="xml">
-	            	<xpath expr="//form[@string='Contract']" position="inside">
+<!-- 	            	<xpath expr="//form[@string='Contract']" position="inside"> -->
+					<xpath expr="//sheet" position="before">
 		                <header>                    									
-							<button string="Confirm" type="object" name="action_confirm" states="draft" />
-							<button string="Mark as done" type="object"	name="action_done" states="confirmed" />
-							<button string="Reset to draft" type="object" name="action_draft" states="confirmed,done" />
-							<field name="state"/>
+							<button string="Confirm" type="object" name="action_confirm" states="draft" class="oe_highlight" groups="base.group_user"/>
+							<button string="Mark as done" type="object"	name="action_done" states="confirmed" class="oe_highlight" groups="base.group_user" />
+							<button string="Reset to draft" type="object" name="action_draft" states="confirmed,done" groups="base.group_user"/>
+							<field name="state" widget="statusbar" statusbar_visible="draft,confirmed,done"/>
                     	</header>
 		            </xpath>
 	                
