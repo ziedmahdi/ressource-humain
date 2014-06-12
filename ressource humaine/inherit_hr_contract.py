@@ -264,7 +264,20 @@ class inherit_hr_contract(osv.osv):
                 employee_id = contract.employee_id
                 if supervisor_id == employee_id:
                     return False
-            return True   
+            return True 
+        
+    def action_draft(self,cr,uid,ids,context=None):
+        #set to "draft" state
+        return self.write(cr,uid,ids,{'state':'draft'},context=context)
+    
+    def action_confirm(self,cr,uid,ids,context=None):
+        #set to "confirmed" state
+        return self.write(cr,uid,ids,{'state':'confirmed'},context=context)
+    
+    def action_done(self,cr,uid,ids,context=None):
+        #set to "done" state
+        return self.write(cr,uid,ids,{'state':'done'},context=context)
+  
                     
                 
                 
@@ -285,12 +298,16 @@ class inherit_hr_contract(osv.osv):
                 'cost_center_ids': fields.one2many('cost.center', 'contract_id', 'Cost centers'),                
                 'date_end':fields.function(_get_date_end, string='End Date', type='date', help='Date end is calculated based on the cost center related to this contract',store=True),
                 'date_start':fields.function(_get_date_start,required=True, string='Start Date', type='date', help='Date start is calculated based on the cost center related to this contract',store=True),
+                'state':fields.selection([('draft','Draft'),('confirmed','Confirmed'),('done','Done')],'Status',readonly=True,required=True),
+
                   
     }            
     
     _defaults = {
                  'wage':0,
                  'active': 0,
+                 'state':'draft'
+
         }
     
     _constraints = [

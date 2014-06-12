@@ -1,16 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?> 
 
     <openerp> 
-        <data>
-        
-        				<!-- hr_contract form view-->
+        <data>        
         				
+        	<!-- hr_contract form view-->        				
         	<record model="ir.ui.view" id="inherit_hr_contract_view_form">
 	        	<field name="name">inherit_hr_contract.form</field>
 	            <field name="model">hr.contract</field>
 	            <field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>           
 	            <field name="arch" type="xml">
+	            	<xpath expr="//form[@string='Contract']" position="inside">
+		                <header>                    									
+							<button string="Confirm" type="object" name="action_confirm" states="draft" />
+							<button string="Mark as done" type="object"	name="action_done" states="confirmed" />
+							<button string="Reset to draft" type="object" name="action_draft" states="confirmed,done" />
+							<field name="state"/>
+                    	</header>
+		            </xpath>
 	                
+                    	
 	                <field name="job_id" position="replace"/>  <!-- supprime le champ Nom/Titre d'un employée , à revoir -->
 	                
 	                <xpath expr="//field[@name='employee_id']" position="replace">
@@ -25,21 +33,16 @@
 	                	<field name="occupation_rate" />	 
 		            </xpath>
 		            
-	            	<xpath expr="//page[@string='Work Permit']" position="replace">	 
-	            	           
+	            	<xpath expr="//page[@string='Work Permit']" position="replace">	 		            	           
 			            <page string="Duration">
 			            	<group string="Contract duration">
 			            		<field name="date_start"/>
 			            		<field name="date_end" />
 			            	</group>	
-			            </page>
-			               
+			            </page>				               
 		            </xpath>
-	            
-	            
-	            
-		            <xpath expr="//page[@string='Information']" position="replace">	
-		            	            
+	            		            		           
+		            <xpath expr="//page[@string='Information']" position="replace">				            	           
 			            <page string="Salary">
 			            	<group col="4">
 			            		<group string="Salary">
@@ -52,45 +55,30 @@
 			            			<field name="taxed_at_source"/>
 			            		</group>
 			            	</group>
-			            </page>
-			            
-		            </xpath>
-		             
-		             
+			            </page>				            
+		            </xpath>			            			            
 		             	
 		            <notebook>	    
 			            <page string="Cost centers">
-			            	<group string="Cost centers" col="4">
-			            	
-			            		<field name="cost_center_ids" widget="many2many_list" on_change="onchange_cost_center(cost_center_ids)"/>
-			            		
+			            	<group string="Cost centers" col="4">				            	
+			            		<field name="cost_center_ids" widget="many2many_list" on_change="onchange_cost_center(cost_center_ids)"/>				            		
 			            	</group>
-			            </page>
-			            
+			            </page>				           
 			            <page string="Other Information" groups="base.group_hr_user">
-                               <group>
+                            <group>
                                	<group string="Active" name="active_group">
                                        <field name="active"/>
-                                   </group>
-                                   
-                                   	
-                                   
-                               </group>
-                               <field name="notes" placeholder="Other Information ..." colspan="4"/>
-                           </page>
-		            </notebook>
-		            
-		            
-                		
-                       
-                     
+                                </group>          
+                            </group>
+                            <field name="notes" placeholder="Other Information ..." colspan="4"/>
+                         </page>
+		            </notebook>			        
+                	     
 	            </field>
 	         </record> 
 	     
-	     
-	     
-	    				<!-- hr_contract tree view -->  
-	    				   				
+
+	    	<!-- hr_contract tree view -->  	    				   				
 	    	<record model="ir.ui.view" id="inherit_hr_contract_view_tree">
 	            <field name="name">inherit_hr_contract.tree</field>
 	            <field name="model">hr.contract</field>
@@ -106,15 +94,53 @@
 	            			<field name="date_end"/>
 	            			<field name="type_id"/>
 	            			<field name="salary_type_id"/>	            			
-	            	 		<field name="occupation_rate"/>
-	            			
+	            	 		<field name="occupation_rate"/>	            		
 	            		</tree>
 	            	</xpath>
 	            	
 	            </field>
-	      	</record> 
+	      	</record>
 	      	
-	      			
-	             
+	      	
+	      	<!-- hr_contract cron -->
+	      	<record id="ir_cron_get_contract_status" model="ir.cron">
+            	<field name="name">cron_contract_status</field>
+            	<field name="interval_number">1</field>
+            	<field name="interval_type">days</field>
+            	<field name="numbercall">-1</field>
+            	<field name="doall" eval="False"/>
+            	<field name="model">hr.contract</field>
+            	<field name="function">_get_contract_status</field>
+            	<field name="args">()</field>
+        	</record>
+	      	 
+	      	
+	      	<!-- inherit_hr_contract action -->
+	      	<!--  
+	      	<record model="ir.actions.act_window" id="action_inherit_hr_contract">
+	            <field name="name">inherit_hr_contract.action</field>
+	            <field name="res_model">hr.contract</field> -->
+<!-- 	            <field name="inherit_id" ref="hr_contract.action_hr_contract"/> --> 
+	            <!-- <field name="view_type">form</field>
+	            <field name="view_mode">tree,form</field>	            
+		      	<field name="help" type="html">
+	              <p class="oe_view_nocontent_create">
+	                Click to define a new job position.
+	              </p><p>
+	                Job Positions are used to define jobs and their requirements.
+	                You can keep track of the number of employees you have per job
+	                position and follow the evolution according to what you planned
+	                for the future.
+	              </p><p>
+	                You can attach a survey to a job position. It will be used in
+	                the recruitment process to evaluate the applicants for this job
+	                position.
+	              </p>
+	            </field>
+	         </record>
+            
+            <menuitem action="action_inherit_hr_contract" id="hr_menu_inherit_contract" parent="hr.menu_hr_main" name="Contracts" sequence="4" groups="base.group_hr_manager"/>
+            -->
+            	      	       
         </data>  
     </openerp>
