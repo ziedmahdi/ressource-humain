@@ -9,7 +9,6 @@
 	            <field name="model">hr.contract</field>
 	            <field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>           
 	            <field name="arch" type="xml">
-<!-- 	            	<xpath expr="//form[@string='Contract']" position="inside"> -->
 					<xpath expr="//sheet" position="before">
 		                <header>                    									
 							<button string="Confirm" type="object" name="action_confirm" states="draft" class="oe_highlight" groups="base.group_user"/>
@@ -114,6 +113,18 @@
             	<field name="function">_get_contract_status</field>
             	<field name="args">()</field>
         	</record>
+        	
+        	<record id="ir_cron_get_contract_occupation_rate" model="ir.cron">
+            	<field name="name">cron_contract_occupation_rate</field>
+            	<field name="interval_number">1</field>
+            	<field name="interval_type">days</field>
+            	<field name="numbercall">-1</field>
+            	<field name="doall" eval="False"/>
+            	<field name="model">hr.contract</field>
+            	<field name="function">_get_contract_occupation_rate</field>
+            	<field name="args">()</field>
+        	</record>
+        	
 	      	 
 	      	
 	      	<!-- inherit_hr_contract action -->
