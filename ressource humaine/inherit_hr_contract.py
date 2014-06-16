@@ -6,6 +6,315 @@ from datetime import date
 from openerp.addons.pcd.cost_center import cost_center
 
 
+#function to insert a cost center's period into a list of period, with integration of
+#occupation rate
+#the list have to be not empty 
+def insert_cost_center_into_list(date_start, date_end, occupation_rate, l,boolean):
+    list_length = len(l)
+    #insertion of the entry's date of current cost center  
+    i = 0
+    not_found = True                    
+    while i < list_length and not_found:#0                        
+        if l[i]['date_end'] > date_start and date_start >= l[i]['date_start']: #1            
+            not_found = False
+            if date_end <= l[i]['date_end'] and date_end > l[i]['date_start']:#2
+                if date_start == l[i]['date_start']:
+                                            
+                    if date_end != l[i]['date_end']:
+                        l.insert(i+1,{
+                                      'occupation_rate' :l[i]['occupation_rate'],
+                                      'date_start' : date_end,
+                                      'date_end' :l[i]['date_end'],
+                                      })
+                        l[i]['date_end'] = date_end
+                    l[i]['occupation_rate'] += occupation_rate
+                    if boolean:
+                        if l[i]['occupation_rate']  > 100 :
+                            return False
+                else:
+                    l.insert(i,{
+                                  'occupation_rate' :l[i]['occupation_rate'],
+                                  'date_start' : l[i]['date_start'],
+                                  'date_end' :date_start,
+                                  })
+                    l[i+1]['occupation_rate'] += occupation_rate
+                    if boolean:
+                        if l[i+1]['occupation_rate']  > 100 :
+                            return False
+                    l[i+1]['date_start']=  date_start
+                    
+                    if date_end != l[i+1]['date_end']:
+                        l.insert(i+2,{
+                                      'occupation_rate' :l[i]['occupation_rate'],
+                                      'date_start' : date_end,
+                                      'date_end' : l[i+1]['date_end'],
+                                      })
+                    l[i+1]['date_end']=  date_end
+#                 else:
+#                     if i != (len(l)-1):
+#                         if date_end > l[i+1]['date_start']:
+#                             l.insert(i+1,{
+#                                           'occupation_rate' :occupation_rate,
+#                                           'date_start' : date_start,
+#                                           'date_end' : l[i+1]['date_start'],
+#                                           })
+#                             k=i+2
+#                             not_found_3 = True
+#                             while k < len(l) and not_found_3:
+#                                 if date_end <= l[k]['date_end']: 
+#                                     if date_end > l[k]['date_start']:#5
+#                                         not_found_3 = False                            
+#                                         if date_end != l[k]['date_end']:
+#                                             l.insert(k+1,{
+#                                               'occupation_rate' : l[k]['occupation_rate'],
+#                                               'date_start' : date_end,
+#                                               'date_end' : l[k]['date_end'],
+#                                               })        
+#                                             l[k]['date_end'] = date_end 
+#                                         l[k]['occupation_rate'] += occupation_rate
+#                                         if boolean:
+#                                             if l[k]['occupation_rate']  > 100 :
+#                                                 return False
+#                                     else:#5
+#                                         l.insert(k,{
+#                                           'occupation_rate' : occupation_rate,
+#                                           'date_start' : l[k]['date_start'],
+#                                           'date_end' : date_end,
+#                                           })                                                                                                                                       
+#                                 else:
+#                                     l[k]['occupation_rate'] += occupation_rate
+#                                     if boolean:
+#                                         if l[k]['occupation_rate']  > 100 :
+#                                             return False
+#                                 k+=1
+#                             if not_found_3:
+#                                 l.append({
+#                                           'occupation_rate' : occupation_rate,
+#                                           'date_start' : l[len(l)-1]['date_end'],
+#                                           'date_end' : date_end,
+#                                           })
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+#                         else:
+#                             l.append({
+#                                       'occupation_rate' :occupation_rate,
+#                                       'date_start' : date_start,
+#                                       'date_end' : date_end,
+#                                       })
+#                         
+#                     else:
+#                         l.append({
+#                                   'occupation_rate' :occupation_rate,
+#                                   'date_start' : date_start,
+#                                   'date_end' : date_end,
+#                                   })
+            else:#2
+                #the date start and date end are not in the same period 
+                #we should find the period that date end belong to
+                if l[i]['date_start']!=date_start:  
+                    l.insert(i+1,{
+                              'occupation_rate' :l[i]['occupation_rate']+occupation_rate,
+                              'date_start' : date_start,
+                              'date_end' : l[i]['date_end'],
+                              })
+                    l[i]['date_end']=  date_start
+                    j = i+2
+                else:
+                    l[i]['occupation_rate']+=occupation_rate
+                    j = i+1
+                
+                
+                not_found_2 = True
+                while j < len(l) and not_found_2:
+                    if date_end <= l[j]['date_end']: 
+                        not_found_2 = False
+                        if date_end > l[j]['date_start']:#5                                                        
+                            if date_end != l[j]['date_end']:
+                                l.insert(j+1,{
+                                  'occupation_rate' : l[j]['occupation_rate'],
+                                  'date_start' : date_end,
+                                  'date_end' : l[j]['date_end'],
+                                  })        
+                                l[j]['date_end'] = date_end 
+                            l[j]['occupation_rate'] += occupation_rate
+                            if boolean:
+                                if l[j]['occupation_rate']  > 100 :
+                                    return False
+                        else:#5
+                            l.insert(j,{
+                              'occupation_rate' : occupation_rate,
+                              'date_start' : l[j-1]['date_end'],
+                              'date_end' : date_end,
+                              })                                                                                                                                       
+                    else:
+                        l[j]['occupation_rate'] += occupation_rate
+                        if boolean:
+                            if l[j]['occupation_rate']  > 100 :
+                                return False
+                    j+=1
+                if not_found_2:
+                    l.append({
+                              'occupation_rate' : occupation_rate,
+                              'date_start' : l[len(l)-1]['date_end'],
+                              'date_end' : date_end,
+                              })
+#                     l.insert(i+1,{
+#                                   'occupation_rate' :l[i]['occupation_rate']+occupation_rate,
+#                                   'date_start' : date_start,
+#                                   'date_end' : l[i]['date_end'],
+#                                   })
+#                     l[i]['date_end']=date_start  
+
+        else:#1
+            if i != len(l)-1:
+                if date_start >= l[i]['date_end'] and date_start < l[i+1]['date_start']:
+                    not_found = False
+                    if date_end > l[i+1]['date_start']:
+                        l.insert(i+1,{
+                                      'occupation_rate' :occupation_rate,
+                                      'date_start' : date_start,
+                                      'date_end' : l[i+1]['date_start'],
+                                      })
+                        k=i+2
+                        not_found_3 = True
+                        while k < len(l) and not_found_3:
+                            if date_end <= l[k]['date_end']: 
+                                if date_end > l[k]['date_start']:#5
+                                    not_found_3 = False                            
+                                    if date_end != l[k]['date_end']:
+                                        l.insert(k+1,{
+                                          'occupation_rate' : l[k]['occupation_rate'],
+                                          'date_start' : date_end,
+                                          'date_end' : l[k]['date_end'],
+                                          })        
+                                        l[k]['date_end'] = date_end 
+                                    l[k]['occupation_rate'] += occupation_rate
+                                    if boolean:
+                                        if l[k]['occupation_rate']  > 100 :
+                                            return False
+                                else:#5
+                                    l.insert(k,{
+                                      'occupation_rate' : occupation_rate,
+                                      'date_start' : l[k]['date_start'],
+                                      'date_end' : date_end,
+                                      })                                                                                                                                       
+                            else:
+                                l[k]['occupation_rate'] += occupation_rate
+                                if boolean:
+                                    if l[k]['occupation_rate']  > 100 :
+                                        return False
+                            k+=1
+                        if not_found_3:
+                            l.append({
+                                      'occupation_rate' : occupation_rate,
+                                      'date_start' : l[len(l)-1]['date_end'],
+                                      'date_end' : date_end,
+                                      })
+#####################################                                                
+                        
+                    else:
+                        l.insert(i+1,{
+                                  'occupation_rate' :occupation_rate,
+                                  'date_start' : date_start,
+                                  'date_end' : date_end,
+                                  })
+                
+                
+                    
+            else:
+                #we go to the next period
+                i+=1         
+        
+#         else:#1
+#             #we go to the next period
+#             i+=1
+    #0
+    if not_found:
+    #the start date is little than the start date of the first period                
+        if date_start < l[0]['date_start']:#3              
+            #it can be either
+            #the added period is grater than all the period in the list  
+            if date_end > l[len(l)-1]['date_end']:
+                for ele in l:
+                    ele['occupation_rate'] += occupation_rate
+                    if boolean:
+                        if ele['occupation_rate']  > 100 :
+                            return False
+                
+                l.insert(0,{
+                              'occupation_rate' :occupation_rate,
+                              'date_start' : date_start,
+                              'date_end' : l[0]['date_start'],
+                              })
+                l.append({
+                          'occupation_rate' :occupation_rate,
+                          'date_start' : l[len(l)-1]['date_end'],
+                          'date_end' : date_end,
+                          })
+                
+            #the end date is exactly the end date of the last period     
+            elif date_end == l[len(l)-1]['date_end']:
+                for ele in l:
+                    ele['occupation_rate'] += occupation_rate
+                    if boolean:
+                        if ele['occupation_rate']  > 100 :
+                            return False
+                
+                l.insert(0,{
+                              'occupation_rate' :occupation_rate,
+                              'date_start' : date_start,
+                              'date_end' : l[0]['date_start'],
+                              })
+                                                                  
+            #the added period is before all the periods in the list
+            elif date_end < l[0]['date_start']:
+                l.insert(0,{
+                          'occupation_rate' :occupation_rate,
+                          'date_start' : date_start,
+                          'date_end' : date_end,
+                          })
+            #the added period intersect one of the periods in the list                 
+            else:
+                #we find the end date is situated in which period
+                i = 0
+                for ele in l:
+                    if date_end <= l[i]['date_end'] and date_end > l[i]['date_start']:                        
+                        if date_end != l[i]['date_end']:
+                            l.insert(i+1,{
+                              'occupation_rate' : l[i]['occupation_rate'],
+                              'date_start' : date_end,
+                              'date_end' : l[i]['date_end'],
+                              })        
+                            l[i]['date_end'] = date_end
+                        l[i]['occupation_rate'] += occupation_rate
+                        if boolean:
+                            if l[i]['occupation_rate']  > 100 :
+                                return False
+                        break                                                 
+                    else:
+                        l[i]['occupation_rate'] += occupation_rate
+                        if boolean:
+                            if l[i]['occupation_rate']  > 100 :
+                                return False
+                        i+=1
+                
+        #the start date is grater than the end date of the last period
+        elif date_start >= l[len(l) - 1]['date_end']:
+            l.append({
+                      'occupation_rate' :occupation_rate,
+                      'date_start' : date_start,
+                      'date_end' : date_end,
+                      })
+    return True
+
 
 
 
@@ -38,17 +347,20 @@ class inherit_hr_contract(osv.osv):
             result[i] =  occupation_rate                                                                                        
         return result
             
-    # function to update the occupation rate and verify its integrity 
-    def onchange_cost_center(self,cr,uid,ids,cost_center_change):                    
+    # function to update the occupation rate and verify its integrity
+    def onchange_cost_center(self,cr,uid,ids,cost_center_change=False):                    
         occupation_rate = 0
-        i=0        
+        i=0
+        l = []        
+        first_creation = False
         current_date = date.today()
         if not ids:
             cost_center = cost_center_change
+            first_creation = True
         else:
             contract = self.browse(cr,uid,ids[0],None)#we are sure that it's only one contract
             cost_center = contract.cost_center_ids
-            
+             
         for cost_center_details in cost_center:            
             if cost_center_change[i][2] is False:
                 cost_center_date_entry = cost_center_details.date_entry
@@ -59,12 +371,12 @@ class inherit_hr_contract(osv.osv):
                     cost_center_occupation_rate = cost_center_change[i][2]['occupation_rate']
                 else:
                     cost_center_occupation_rate = cost_center_details.occupation_rate
-                
+                 
                 if 'date_entry' in cost_center_change[i][2].keys():
                     cost_center_date_entry = cost_center_change[i][2]['date_entry']
                 else:
                     cost_center_date_entry = cost_center_details.date_entry
-                
+                 
                 if 'date_release' in cost_center_change[i][2].keys():
                     cost_center_date_release = cost_center_change[i][2]['date_release']
                 else:
@@ -72,9 +384,42 @@ class inherit_hr_contract(osv.osv):
             i+=1                
             date_start =datetime.datetime.strptime(cost_center_date_entry, "%Y-%m-%d").date()
             date_end =datetime.datetime.strptime(cost_center_date_release, "%Y-%m-%d").date()
+            
+            if l==[]:
+                l.append({
+                          'occupation_rate' :cost_center_occupation_rate,
+                          'date_start' : date_start,
+                          'date_end' :date_end,
+                 })
+            else:
+                insert_cost_center_into_list(date_start, date_end, cost_center_occupation_rate, l,False)
+            
             if date_end >= current_date and current_date >= date_start:            
                 occupation_rate +=   cost_center_occupation_rate             
-                     
+        
+        
+        #we add the new cost centers
+        if not first_creation:
+            list_length = len(cost_center_change)
+            while i < list_length:
+                cost_center_occupation_rate = cost_center_change[i][2]['occupation_rate']
+                cost_center_date_entry = cost_center_change[i][2]['date_entry']
+                cost_center_date_release = cost_center_change[i][2]['date_release']
+                date_start =datetime.datetime.strptime(cost_center_date_entry, "%Y-%m-%d").date()
+                date_end =datetime.datetime.strptime(cost_center_date_release, "%Y-%m-%d").date()
+                if date_end >= current_date and current_date >= date_start:            
+                    occupation_rate +=   cost_center_occupation_rate             
+                i+=1
+                if l==[]:
+                    l.append({
+                              'occupation_rate' :cost_center_occupation_rate,
+                              'date_start' : date_start,
+                              'date_end' :date_end,
+                     })
+                else:
+                    insert_cost_center_into_list(date_start, date_end, cost_center_occupation_rate, l,False)
+        
+        print(l)
         res={
                 'value':{
                          'occupation_rate': occupation_rate,                                 
@@ -85,24 +430,72 @@ class inherit_hr_contract(osv.osv):
                             'title': 'Occupation rate is incorrect',
                             'message': 'The occupation rate has exceed 100% Please check the associated cost center',
                             }
-                
+                 
         return res
-    
+                    
     #function to check the occupation rate
-    def _check_occupation_rate(self, cr,uid,ids,context=None):        
-        occupation_rate=0
+    #the principle is to create a list witch contains every important period for the employee 
+    #associated with this contract    
+    def _check_occupation_rate(self, cr,uid,ids,context=None):
+        l=[]
+        #1st step check the current contract
         contracts = self.browse(cr,uid,ids,context=context)
-        current_date = date.today()
         for contract in contracts:
-            cost_center = contract.cost_center_ids
-            for cost_center_details in cost_center:                                   
-                date_start =datetime.datetime.strptime(cost_center_details.date_entry, "%Y-%m-%d").date()
-                date_end =datetime.datetime.strptime(cost_center_details.date_release, "%Y-%m-%d").date()
-                if date_end >= current_date and current_date >= date_start:            
-                    occupation_rate +=   cost_center_details.occupation_rate  
-        if occupation_rate > 100:            
-            return False
-        return True
+            cost_centers = contract.cost_center_ids
+            #if the contract is not associated with any cost center, it's valid  
+            if not cost_centers:
+                return True
+            #there is at least one cost center associated with this contract 
+            for cost_center in cost_centers:
+                #if it's the first cost_center
+                date_start = datetime.datetime.strptime(cost_center.date_entry, "%Y-%m-%d").date()
+                date_end = datetime.datetime.strptime(cost_center.date_release, "%Y-%m-%d").date()
+                if l==[]:
+                    l.append({
+                              'occupation_rate' :cost_center.occupation_rate,
+                              'date_start' : date_start,
+                              'date_end' :date_end,
+                     })
+                else:
+                    if not insert_cost_center_into_list(date_start, date_end, cost_center.occupation_rate, l,True):
+                        return False
+             
+            sql_req="""SELECT  ids_contract
+                    FROM hr_contract
+                    WHERE active = TRUE
+                    AND employee_id = %d
+                    AND id <> %d
+                    """ %(contract.employee_id,contract.id,)
+            cr.execute(sql_req)
+            sql_res = cr.dictfetchone()
+            if not sql_res:
+                return True
+            others_contract = self.browse(cr,uid,ids,context=context)
+            for one_other_contract in others_contract:
+                cost_centers = one_other_contract.cost_center_ids
+                for cost_center in cost_centers:
+                    date_start = datetime.datetime.strptime(cost_center.date_entry, "%Y-%m-%d").date()
+                    date_end = datetime.datetime.strptime(cost_center.date_release, "%Y-%m-%d").date()
+                    if not insert_cost_center_into_list(date_start, date_end, cost_center.occupation_rate, l,True):
+                        return False
+        return True                    
+                            
+                                                                                                
+    
+#     def _check_occupation_rate(self, cr,uid,ids,context=None):        
+#         occupation_rate=0
+#         contracts = self.browse(cr,uid,ids,context=context)
+#         current_date = date.today()
+#         for contract in contracts:
+#             cost_center = contract.cost_center_ids
+#             for cost_center_details in cost_center:                                   
+#                 date_start =datetime.datetime.strptime(cost_center_details.date_entry, "%Y-%m-%d").date()
+#                 date_end =datetime.datetime.strptime(cost_center_details.date_release, "%Y-%m-%d").date()
+#                 if date_end >= current_date and current_date >= date_start:            
+#                     occupation_rate +=   cost_center_details.occupation_rate  
+#         if occupation_rate > 100:            
+#             return False
+#         return True
     
     #function to 
     def onchange_employee_id(self,cr,uid,ids,employee_id,occupation_rate,boolean=False):                                                
