@@ -19,8 +19,8 @@ class salary_type(osv.osv):
                     ('Yearly','Yearly')],'Payement planification', select=True),
                  
                  'sex':fields.selection([
-                     ('homme','Homme'),
-                     ('femme','Femme'),
+                     ('Male','Male'),
+                     ('Female','Female'),
                       ],'Sexe', select=True),
                 
                  'code':fields.char('Code', size=64, required=False)    
