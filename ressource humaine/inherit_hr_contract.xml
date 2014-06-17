@@ -11,10 +11,10 @@
 	            <field name="arch" type="xml">
 					<xpath expr="//sheet" position="before">
 		                <header>                    									
-							<button string="Confirm" type="object" name="action_confirm" states="draft" class="oe_highlight" groups="base.group_user"/>
-							<button string="Mark as done" type="object"	name="action_done" states="confirmed" class="oe_highlight" groups="base.group_user" />
-							<button string="Reset to draft" type="object" name="action_draft" states="confirmed,done" groups="base.group_user"/>
-							<field name="state" widget="statusbar" statusbar_visible="draft,confirmed,done"/>
+							<button string="Confirm" type="object" name="action_ongoing" states="draft" class="oe_highlight" groups="base.group_user"/>
+							<button string="Mark as done" type="object"	name="action_done" states="ongoing" class="oe_highlight" groups="base.group_user" />
+							<button string="Reset to draft" type="object" name="action_draft" states="ongoing,done" groups="base.group_user"/>
+							<field name="state" widget="statusbar" statusbar_visible="draft,ongoing,done"/>
                     	</header>
 		            </xpath>
 	                

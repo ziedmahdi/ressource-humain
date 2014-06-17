@@ -802,9 +802,9 @@ class inherit_hr_contract(osv.osv):
         #set to "draft" state
         return self.write(cr,uid,ids,{'state':'draft'},context=context)
     
-    def action_confirm(self,cr,uid,ids,context=None):
-        #set to "confirmed" state
-        return self.write(cr,uid,ids,{'state':'confirmed'},context=context)
+    def action_ongoing(self,cr,uid,ids,context=None):
+        #set to "ongoing" state
+        return self.write(cr,uid,ids,{'state':'ongoing'},context=context)
     
     def action_done(self,cr,uid,ids,context=None):
         #set to "done" state
@@ -830,7 +830,7 @@ class inherit_hr_contract(osv.osv):
                 'cost_center_ids': fields.one2many('cost.center', 'contract_id', 'Cost centers'),                
                 'date_end':fields.function(_get_date_end, string='End Date', type='date', help='Date end is calculated based on the cost center related to this contract',store=True),
                 'date_start':fields.function(_get_date_start,required=True, string='Start Date', type='date', help='Date start is calculated based on the cost center related to this contract',store=True),
-                'state':fields.selection([('draft','Draft'),('confirmed','Confirmed'),('done','Done')],'Status',readonly=True,required=True),
+                'state':fields.selection([('draft','Draft'),('ongoing','Ongoing'),('done','Done')],'Status',readonly=True,required=True),
 
                   
     }            
