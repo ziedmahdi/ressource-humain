@@ -11,12 +11,12 @@ class salary_type(osv.osv):
     
     _columns = {
                 
-                'label':fields.char('Libellé', size=64, required=False),
+                'label':fields.char('Label', size=64, required=False),
                 
                 'payment_planif':fields.selection([
-                    ('mensuelle','Mensuelle'),
-                    ('trimestrielle','Trimestrielle'),
-                    ('annuelle','Annuelle')],'Planification de la paie', select=True),
+                    ('Monthly','Monthly'),
+                    ('Quarterly','Quarterly'),
+                    ('Yearly','Yearly')],'Payement planification', select=True),
                  
                  'sex':fields.selection([
                      ('homme','Homme'),

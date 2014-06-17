@@ -2,35 +2,53 @@
 <openerp>
 	<data>
 		
-			<!--cost center form view -->
-         <record id="view_function_form" model="ir.ui.view">
-            <field name="name">function.form </field>
+					<!--Function form view -->
+         <record model="ir.ui.view" id="function_view_form">
+	        	<field name="name">function.form</field>
+	            <field name="model">function</field>
+	            <field name="type">form</field>            
+	            <field name="arch" type="xml">
+	            	<form string="Function" version="7.0">
+	                	<sheet>
+	                		<notebook>
+	                			<page string="Function">
+	                				<group>
+	                					<field name="function"/>
+	             						<field name="state" />
+	                				</group>
+	                			</page>
+	                		</notebook>	
+                    	</sheet> 
+                 	 </form> 
+	           	  </field>
+	         </record>           			
+          			
+          			<!--Function Tree view -->
+          <record id="view_function_tree" model="ir.ui.view">
+            <field name="name">function.tree </field>
             <field name="model">function</field>
+            <field name="type">tree</field>
             <field name="arch" type="xml">
-               <form string="Function " version="7.0">
-               	
-            	  <group colspan="2" col="4">
-
- 	                    <field name="function"/>
-	                    <field name="state" />
-            		
-            		
-            	  </group>
-            	</form>      	  	
+               <tree string="Function">
+               	 <field name="function"/>
+	             <field name="state" />
+            	</tree>    	  	
             </field>
           </record> 
           
           
-          		        	   <!-- action cost center-->
+          
+          
+          		     <!-- action Function-->
         	   
         <record model="ir.actions.act_window" id="action_hr_cost_center_function">
             <field name="name">function.action</field>
             <field name="res_model">function</field>
             <field name="view_type">form</field>
-            <field name="view_mode">form</field> 
+            <field name="view_mode">form,tree</field> 
         </record>
         
-        		        <!--  menu item -->
+        		      <!--  Function  Menu -->
         <menuitem action="action_hr_cost_center_function" id="menu_hr_cost_center_function" name="Function" parent="hr.menu_hr_configuration"  />
          </data>
 </openerp>

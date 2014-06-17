@@ -10,13 +10,21 @@
 	            <field name="model">salary.type</field>
 	            <field name="type">form</field>            
 	            <field name="arch" type="xml">
-	                
-	                <field name="label"/>
-	                <field name="payment_planif"/>
-	                <field name="sex"/>
-	                <field name="code"/>
-                     
-	            </field>
+	            	<form string="Salary types" version="7.0">
+	                	<sheet>
+	                		<notebook>
+	                			<page string="Salary Types">
+	                				<group>
+	                					<field name="label" />
+	                					<field name="payment_planif"/>               				
+	                					<field name="sex"/>
+	                					<field name="code"/>
+	                				</group>	
+	                			</page>
+	                		</notebook>	
+                    	</sheet> 
+                 	 </form> 
+	           	  </field>
 	         </record>  
 	     
 	     
@@ -44,7 +52,7 @@
 	      				<!-- salary_type Action-->
 		
 			<record id="salary_type_action" model="ir.actions.act_window">
-			    <field name="name">Salary type</field>
+			    <field name="name">Salary Types</field>
 			    <field name="res_model">salary.type</field>
 			    <field name="view_type">form</field>
 			    <field name="view_mode">tree,form</field>
@@ -53,7 +61,7 @@
 		
 						 <!--salary_type Menu-->
 			
-			<menuitem action="salary_type_action" id="menu_action_salary_type" parent="hr_contract.next_id_56" name="Types de salaire"/>
+			<menuitem action="salary_type_action" id="menu_action_salary_type" parent="hr_contract.next_id_56" name="Salary Types"/>
 	      	       
 	      	       
 	      	       
