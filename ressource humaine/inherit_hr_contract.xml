@@ -22,7 +22,7 @@
 	                <field name="job_id" position="replace"/>  <!-- supprime le champ Nom/Titre d'un employée , à revoir -->
 	                
 	                <xpath expr="//field[@name='employee_id']" position="replace">
-	                	<field name="employee_id" options='{"no_open": True}' on_change="onchange_employee_id(employee_id,occupation_rate)"/>
+	                	<field name="employee_id" options='{"no_open": True}' on_change="onchange_employee_id(employee_id,cost_center_ids)"/>
 	                </xpath>
 	                
 	                <xpath expr="//field[@name='type_id']" position="replace">
@@ -61,7 +61,7 @@
 		            <notebook>	    
 			            <page string="Cost centers">
 			            	<group string="Cost centers" col="4">				            	
-			            		<field name="cost_center_ids" widget="many2many_list" on_change="onchange_cost_center(cost_center_ids)"/>				            		
+			            		<field name="cost_center_ids" widget="many2many_list" on_change="onchange_cost_center(cost_center_ids,employee_id)"/>				            		
 			            	</group>
 			            </page>				           
 			            <page string="Other Information" groups="base.group_hr_user">
