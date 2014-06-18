@@ -114,7 +114,9 @@
 	            	
 	            </field>
 	      	</record>
-		      
+		     
+		     
+		    <delete model="ir.ui.menu" search="[('name','=','Employee Tags')]" /> 
         </data>
         
     </openerp>
