@@ -136,6 +136,7 @@ class inherit_hr(osv.osv):
         'zip': fields.char('Zip', size=32),
         'city': fields.char('City', size=64),
         'country': fields.char('Country', size=64),
+        'children': fields.integer('Number of Children'), 
         'title':fields.selection([('mr', 'Mr'),('ms', 'Ms'),('miss', 'Miss')], 'Title'),
         'active':fields.function(_get_employee_status, string='Active', type='boolean', help='Employee status is calculated automatically',store=True),
         }

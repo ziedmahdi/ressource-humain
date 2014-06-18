@@ -45,7 +45,14 @@
             <field name="name">function.action</field>
             <field name="res_model">function</field>
             <field name="view_type">form</field>
-            <field name="view_mode">form,tree</field> 
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+	              <p class="oe_view_nocontent_create">
+	                Click to create a function
+	              </p><p>
+	                This field is going to be used during the creation of a contract 
+	              </p>
+	            </field> 
         </record>
         
         		      <!--  Function  Menu -->
