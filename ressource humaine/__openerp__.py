@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    "name": "Human Resource Management",
+    "name": "Human Resources Management",
     "version": "1.0",
     'category': 'Human Resources',
     "depends": ["base","hr","hr_contract","report_webkit"],
@@ -22,4 +22,5 @@ Management of reports""",
     'demo_xml': [],
     'installable': True,
     'active': False,
+    'application':True,
 } 
