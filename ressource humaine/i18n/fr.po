@@ -1,0 +1,597 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* pcd
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 7.0-20140223-002825\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-06-18 21:31+0000\n"
+"PO-Revision-Date: 2014-06-18 23:13+0100\n"
+"Last-Translator: seif <seif.hammami20@gmail.com>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+
+#. module: pcd
+#: code:addons/pcd/inherit_hr_contract.py:790
+#: constraint:hr.contract:0
+#, python-format
+msgid "Employee can't be his own boss"
+msgstr "Employé ne peut pas être son propre patron"
+
+#. module: pcd
+#: field:hr.employee,zip:0
+msgid "Zip"
+msgstr "Code postal"
+
+#. module: pcd
+#: field:hr.employee,title:0
+msgid "Title"
+msgstr "Titre"
+
+#. module: pcd
+#: selection:salary.type,payment_planif:0
+msgid "Monthly"
+msgstr "Mensuel"
+
+#. module: pcd
+#: view:hr.contract:0
+msgid "Mark as done"
+msgstr "Marqué comme terminé"
+
+#. module: pcd
+#: field:cost.center,department_id:0
+msgid "Department"
+msgstr "Département"
+
+#. module: pcd
+#: code:addons/pcd/inherit_hr_contract.py:31
+#, python-format
+msgid "Invalid Occupation Rate"
+msgstr "Taux d'occupation invalide"
+
+#. module: pcd
+#: view:hr.contract:0
+#: view:hr.employee:0
+msgid "Other Information ..."
+msgstr "Autre information ..."
+
+#. module: pcd
+#: help:hr.contract,occupation_rate:0
+msgid "Occupation rate calculated based on the cost center related to this contract"
+msgstr "Taux d'occupation calculée sur la base du centre de coût lié à ce contrat"
+
+#. module: pcd
+#: code:addons/pcd/inherit_hr.py:22
+#, python-format
+msgid "Please enter a valid email address"
+msgstr "Entrer une adresse email valide"
+
+#. module: pcd
+#: view:hr.employee:0
+msgid "Birth"
+msgstr "Date de naissance"
+
+#. module: pcd
+#: field:cost.center,occupation_rate:0
+msgid "Occupation Rate"
+msgstr "Taux d'occupation"
+
+#. module: pcd
+#: view:hr.contract:0
+#: field:hr.contract,salary:0
+msgid "Salary"
+msgstr "Salaire"
+
+#. module: pcd
+#: view:hr.contract:0
+#: field:hr.contract,cost_center_ids:0
+msgid "Cost centers"
+msgstr "Centre de coûts"
+
+#. module: pcd
+#: selection:hr.contract,state:0
+msgid "Ongoing"
+msgstr "En cours"
+
+#. module: pcd
+#: help:hr.contract,active:0
+msgid "Contract status is calculated automatically"
+msgstr "Statut du contrat est calculé automatiquement"
+
+#. module: pcd
+#: view:salary.type:0
+msgid "Salary types"
+msgstr "Types de salaire"
+
+#. module: pcd
+#: code:addons/pcd/inherit_hr.py:22
+#, python-format
+msgid "Invalid Email"
+msgstr "Email invalide"
+
+#. module: pcd
+#: selection:function,state:0
+msgid " Manager"
+msgstr "Directeur"
+
+#. module: pcd
+#: selection:salary.type,payment_planif:0
+msgid "Yearly"
+msgstr "Annuelle"
+
+#. module: pcd
+#: selection:salary.type,sex:0
+msgid "Female"
+msgstr "Féminin"
+
+#. module: pcd
+#: model:ir.actions.report.xml,name:pcd.monmodule_webkit_id
+msgid "print contracts"
+msgstr "Imprimer contrats"
+
+#. module: pcd
+#: constraint:hr.employee:0
+msgid "Invalid Work Phone Number. Please enter a valid phone number"
+msgstr "Numéro de téléphone de travail invalide. Entrez un numéro de téléphone valide"
+
+#. module: pcd
+#: help:hr.employee,active:0
+msgid "Employee status is calculated automatically"
+msgstr "Le statut de l'employé est calculé automatiquement"
+
+#. module: pcd
+#: view:hr.contract:0
+msgid "Confirm"
+msgstr "Confirmer"
+
+#. module: pcd
+#: model:ir.model,name:pcd.model_function
+msgid " fonction "
+msgstr "fonction"
+
+#. module: pcd
+#: constraint:hr.employee:0
+msgid "Invalid Personal Email. Please enter a valid email address"
+msgstr "Adresse email personnel invalide.Entrer une adresse email valide"
+
+#. module: pcd
+#: view:cost.center:0
+msgid "Cost Center Information"
+msgstr "Information du centre de coût"
+
+#. module: pcd
+#: model:ir.model,name:pcd.model_hr_job
+msgid "Job Description"
+msgstr "Description du poste"
+
+#. module: pcd
+#: field:function,state:0
+msgid "State"
+msgstr "État"
+
+#. module: pcd
+#: view:hr.contract:0
+msgid "Reset to draft"
+msgstr "Remise au brouillon"
+
+#. module: pcd
+#: selection:function,state:0
+#: model:ir.model,name:pcd.model_hr_employee
+msgid "Employee"
+msgstr "Employé"
+
+#. module: pcd
+#: field:cost.center,number_of_hours_worked:0
+msgid "Number of hours worked"
+msgstr "Nombre d'heures de travail"
+
+#. module: pcd
+#: model:ir.model,name:pcd.model_cost_center
+msgid " centre de cout"
+msgstr "Centre de coût"
+
+#. module: pcd
+#: view:hr.contract:0
+#: view:hr.employee:0
+msgid "Other Information"
+msgstr "Autre information"
+
+#. module: pcd
+#: view:cost.center:0
+msgid "Cost Center "
+msgstr "Centre de coût"
+
+#. module: pcd
+#: constraint:hr.employee:0
+msgid "Invalid Work Email. Please enter a valid email address"
+msgstr "Adresse email de travail invalide.Entrer une adresse email de travail valide"
+
+#. module: pcd
+#: field:cost.center,date_entry:0
+msgid "Date of Entry"
+msgstr "Date d'entrée"
+
+#. module: pcd
+#: code:addons/pcd/inherit_hr_contract.py:790
+#, python-format
+msgid "Can not associate contract with this employee "
+msgstr "Vous ne pouvez pas associer ce contrat avec cet employé"
+
+#. module: pcd
+#: field:cost.center,date_release:0
+msgid "Realease Date"
+msgstr "Date de libération"
+
+#. module: pcd
+#: code:addons/pcd/inherit_hr_contract.py:26
+#, python-format
+msgid "Invalid Dates"
+msgstr "Dates invalides"
+
+#. module: pcd
+#: selection:hr.employee,title:0
+msgid "Ms"
+msgstr "Mme"
+
+#. module: pcd
+#: selection:hr.employee,title:0
+msgid "Mr"
+msgstr "M."
+
+#. module: pcd
+#: selection:salary.type,sex:0
+msgid "Male"
+msgstr "Masculin"
+
+#. module: pcd
+#: selection:hr.contract,work_time_type:0
+msgid "Partial"
+msgstr "Partielle"
+
+#. module: pcd
+#: constraint:cost.center:0
+msgid "Error! The cost center occupation rate must be between 0 and 100"
+msgstr "Erreur! Le taux d'occupation du centre de coûts doit être comprise entre 0 et 100"
+
+#. module: pcd
+#: field:hr.job,job_location:0
+msgid "Job location"
+msgstr "Lieu de travail"
+
+#. module: pcd
+#: field:hr.employee,matricule:0
+msgid "Matricule"
+msgstr "matricule"
+
+#. module: pcd
+#: constraint:cost.center:0
+msgid "Error! Cost Center, date entry must be less than contract date release."
+msgstr "Erreur! Centre de coûts, la date d'entrée doit être inférieure à la date de libération du contrat."
+
+#. module: pcd
+#: model:ir.actions.act_window,name:pcd.action_hr_cost_center
+msgid "Cost Center"
+msgstr "Centre de coût"
+
+#. module: pcd
+#: selection:hr.contract,state:0
+msgid "Draft"
+msgstr "Brouillon"
+
+#. module: pcd
+#: view:hr.employee:0
+msgid "Contact Information"
+msgstr "Coordonnées"
+
+#. module: pcd
+#: selection:salary.type,payment_planif:0
+msgid "Quarterly"
+msgstr "Trimestrielle"
+
+#. module: pcd
+#: view:hr.contract:0
+msgid "Contrats des employées"
+msgstr "Contrats des employées"
+
+#. module: pcd
+#: view:hr.contract:0
+msgid "Contract duration"
+msgstr "Durée de contrat"
+
+#. module: pcd
+#: field:hr.contract,state:0
+#: view:hr.employee:0
+msgid "Status"
+msgstr "Statut"
+
+#. module: pcd
+#: code:addons/pcd/inherit_hr.py:54
+#, python-format
+msgid "Invalid Phone Number"
+msgstr "Numéro de téléphone invalide"
+
+#. module: pcd
+#: field:salary.type,sex:0
+msgid "Sexe"
+msgstr "Sexe"
+
+#. module: pcd
+#: selection:function,state:0
+msgid "Apprentices"
+msgstr "Apprentis"
+
+#. module: pcd
+#: field:cost.center,contract_id:0
+msgid "Contracts"
+msgstr "Contrats"
+
+#. module: pcd
+#: view:hr.contract:0
+#: field:hr.contract,active:0
+#: view:hr.employee:0
+#: field:hr.employee,active:0
+msgid "Active"
+msgstr "Active"
+
+#. module: pcd
+#: model:ir.actions.act_window,name:pcd.salary_type_action
+#: model:ir.ui.menu,name:pcd.menu_action_salary_type
+#: view:salary.type:0
+msgid "Salary Types"
+msgstr "Types de salaires"
+
+#. module: pcd
+#: model:ir.model,name:pcd.model_salary_type
+msgid "salary.type"
+msgstr "types.salaire"
+
+#. module: pcd
+#: field:hr.contract,taxed_at_source:0
+msgid "Taxed at source"
+msgstr "Imposés à la source"
+
+#. module: pcd
+#: code:addons/pcd/inherit_hr_contract.py:361
+#, python-format
+msgid "Please enter a valid salary"
+msgstr "Entrer un salaire valide"
+
+#. module: pcd
+#: model:ir.model,name:pcd.model_hr_contract
+msgid "Contract"
+msgstr "Contrat"
+
+#. module: pcd
+#: model:ir.actions.act_window,help:pcd.salary_type_action
+msgid ""
+"<p class=\"oe_view_nocontent_create\">\n"
+"	                Click to create a type of salary\n"
+"	              </p><p>\n"
+"	                Salary types is going to be used during the creation of a contract \n"
+"	              </p>\n"
+"	            "
+msgstr ""
+"<p class=\"oe_view_nocontent_create\">\n"
+"	                Cliquez pour créer un type de salaire\n"
+"	              </p><p>\n"
+"	               Le type de salaire va être utilisée lors de la création d'un contrat \n"
+"	              </p>\n"
+"	            "
+
+#. module: pcd
+#: code:addons/pcd/inherit_hr_contract.py:361
+#, python-format
+msgid "Invalid salary"
+msgstr "Salaire invalide"
+
+#. module: pcd
+#: field:cost.center,supervisor:0
+msgid "Supervisor"
+msgstr "Superviseur"
+
+#. module: pcd
+#: constraint:hr.employee:0
+msgid "Invalid Personal Phone Number. Please enter a valid phone number"
+msgstr "Numéro de téléphone personnel invalide.Entrer un numéro de téléphone valide"
+
+#. module: pcd
+#: field:salary.type,label:0
+msgid "Label"
+msgstr "libellé"
+
+#. module: pcd
+#: view:hr.employee:0
+msgid "Position & Other Info"
+msgstr "Position & Autres infos"
+
+#. module: pcd
+#: code:addons/pcd/inherit_hr_contract.py:31
+#, python-format
+msgid "Occupation rate must be between 0 and 100"
+msgstr "Le taux d'occupation doit être comprise entre 0 et 100"
+
+#. module: pcd
+#: field:salary.type,code:0
+msgid "Code"
+msgstr "Code"
+
+#. module: pcd
+#: view:hr.employee:0
+msgid "Public Information"
+msgstr "Information publique"
+
+#. module: pcd
+#: code:addons/pcd/inherit_hr_contract.py:26
+#, python-format
+msgid "Entry date must be before release date"
+msgstr "Date d'entrée doit être avant la date de libération"
+
+#. module: pcd
+#: selection:hr.contract,state:0
+msgid "Done"
+msgstr "Terminé"
+
+#. module: pcd
+#: field:hr.employee,personal_email:0
+msgid "Personal Email"
+msgstr "Email personnelle"
+
+#. module: pcd
+#: selection:hr.employee,title:0
+msgid "Miss"
+msgstr "Mlle"
+
+#. module: pcd
+#: view:hr.employee:0
+msgid "Personal Information"
+msgstr "Information personnelle"
+
+#. module: pcd
+#: field:salary.type,payment_planif:0
+msgid "Payement planification"
+msgstr "Planification du paiement"
+
+#. module: pcd
+#: view:hr.employee:0
+#: field:hr.employee,first_name:0
+msgid "First Name"
+msgstr "Prénom"
+
+#. module: pcd
+#: field:hr.employee,ssn:0
+msgid "Security Social Number"
+msgstr "Numéro de sécurité sociale"
+
+#. module: pcd
+#: field:hr.employee,personal_phone:0
+msgid "Personal Phone"
+msgstr "Numéro de téléphone personnelle"
+
+#. module: pcd
+#: constraint:hr.contract:0
+msgid "Cannot associate this contract with the chosen employee"
+msgstr "Vous ne pouvez pas associer ce contrat avec l'employé choisi"
+
+#. module: pcd
+#: field:hr.contract,occupation_rate:0
+msgid "Occupation rate"
+msgstr "Taux d'occupation"
+
+#. module: pcd
+#: field:cost.center,function_id:0
+#: view:function:0
+#: field:function,function:0
+#: model:ir.ui.menu,name:pcd.menu_hr_cost_center_function
+msgid "Function"
+msgstr "Fonction"
+
+#. module: pcd
+#: model:ir.actions.act_window,help:pcd.action_hr_cost_center_function
+msgid ""
+"<p class=\"oe_view_nocontent_create\">\n"
+"	                Click to create a function\n"
+"	              </p><p>\n"
+"	                This field is going to be used during the creation of a contract \n"
+"	              </p>\n"
+"	            "
+msgstr ""
+"<p class=\"oe_view_nocontent_create\">\n"
+"	                Cliquez pour créer une fonction\n"
+"	              </p><p>\n"
+"	                Ce champ va être utilisée lors de la création d'un contrat \n"
+"	              </p>\n"
+"	            "
+
+#. module: pcd
+#: selection:hr.contract,work_time_type:0
+msgid "Complete"
+msgstr "Complet"
+
+#. module: pcd
+#: view:hr.contract:0
+#: field:hr.contract,work_time_type:0
+msgid "Working time type"
+msgstr "Type de temps de travail"
+
+#. module: pcd
+#: view:hr.employee:0
+#: field:hr.employee,address:0
+msgid "Address"
+msgstr "Adresse"
+
+#. module: pcd
+#: constraint:hr.contract:0
+msgid "The occupation rate has exceed 100% Please check the associated cost center"
+msgstr "Le taux d'occupation a dépasser 100% Vérifier les centres de coûts associés"
+
+#. module: pcd
+#: model:ir.actions.act_window,name:pcd.action_hr_cost_center_function
+msgid "function.action"
+msgstr "fonction.action"
+
+#. module: pcd
+#: view:salary.type:0
+msgid "Types de contrat"
+msgstr "Types de contrat"
+
+#. module: pcd
+#: field:hr.employee,country:0
+msgid "Country"
+msgstr "Pays"
+
+#. module: pcd
+#: view:hr.employee:0
+msgid "Employees"
+msgstr "Employés"
+
+#. module: pcd
+#: code:addons/pcd/inherit_hr.py:54
+#, python-format
+msgid "Please enter a valid phone number"
+msgstr "Entrez un numéro de téléphone valide"
+
+#. module: pcd
+#: field:hr.contract,salary_type_id:0
+msgid "Salary type"
+msgstr "Type de salaire"
+
+#. module: pcd
+#: selection:function,state:0
+msgid "Senior Manager"
+msgstr "Directeur principal"
+
+#. module: pcd
+#: selection:function,state:0
+msgid "Trainee"
+msgstr "Stagiaire"
+
+#. module: pcd
+#: view:hr.contract:0
+msgid "Duration"
+msgstr "Durée"
+
+#. module: pcd
+#: model:ir.actions.act_window,help:pcd.action_inherit_hr_contract
+msgid "<p class=\"oe_view_nocontent_create\">\n"
+"	                Click to define a new contract.\n"
+"	              </p><p>\n"
+"	                Contract are used to be associated with one employee\n"
+"	              </p>\n"
+"	            "
+msgstr "<p class=\"oe_view_nocontent_create\">\n"
+"	                Cliquer pour créer un nouveau contrat .\n"
+"	              </p><p>\n"
+"	                Un contrat va être associé à un employé \n"
+"	              </p>\n"
+
+#. module: pcd
+#: field:cost.center,contract_id:0
+#: model:ir.actions.act_window,name:pcd.action_inherit_hr_contract
+#: model:ir.ui.menu,name:pcd.hr_menu_inherit_contract
+msgid "Contracts"
+msgstr "Contrats"
+

@@ -128,31 +128,26 @@
 	      	 
 	      	
 	      	<!-- inherit_hr_contract action -->
-	      	<!--  
+	      	
+	      	<delete model="ir.actions.act_window" search="[('name','=','Contracts')]" />
+	      	   
 	      	<record model="ir.actions.act_window" id="action_inherit_hr_contract">
-	            <field name="name">inherit_hr_contract.action</field>
-	            <field name="res_model">hr.contract</field> -->
-<!-- 	            <field name="inherit_id" ref="hr_contract.action_hr_contract"/> --> 
-	            <!-- <field name="view_type">form</field>
+	            <field name="name">Contracts</field>
+	            <field name="res_model">hr.contract</field> 
+	             <field name="view_type">form</field>
 	            <field name="view_mode">tree,form</field>	            
 		      	<field name="help" type="html">
 	              <p class="oe_view_nocontent_create">
-	                Click to define a new job position.
+	                Click to define a new contract.
 	              </p><p>
-	                Job Positions are used to define jobs and their requirements.
-	                You can keep track of the number of employees you have per job
-	                position and follow the evolution according to what you planned
-	                for the future.
-	              </p><p>
-	                You can attach a survey to a job position. It will be used in
-	                the recruitment process to evaluate the applicants for this job
-	                position.
+	                Contract are used to be associated with one employee
 	              </p>
 	            </field>
 	         </record>
             
             <menuitem action="action_inherit_hr_contract" id="hr_menu_inherit_contract" parent="hr.menu_hr_main" name="Contracts" sequence="4" groups="base.group_hr_manager"/>
-            -->
+            
+            
             	      	       
         </data>  
     </openerp>
